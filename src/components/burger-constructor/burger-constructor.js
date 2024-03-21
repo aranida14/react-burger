@@ -1,8 +1,8 @@
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from '../../utils/data';
+import { data } from '../../utils/data';
 
-function BurgerConstructor(props) {//TODO брать элементы из data или сразу сделать через props
+function BurgerConstructor() {
   const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png';
   return (
     <section className={ `${styles.section} pt-25 pl-4` }>

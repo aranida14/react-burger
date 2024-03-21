@@ -1,7 +1,8 @@
 import React from 'react';
 import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon, Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import data from '../../utils/data';
+import { data, dataPropTypes } from '../../utils/data';
+import PropTypes from 'prop-types';
 
 function IngredientCard(props) {
   const {_id, image, name, price} = props.data;
@@ -19,6 +20,16 @@ function IngredientCard(props) {
   )
 }
 
+IngredientCard.propTypes = {
+  data: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,    
+  })
+}; 
+
+
 function IngredientsGroup(props) {
   return (
     <li className={styles.group}>
@@ -34,6 +45,10 @@ function IngredientsGroup(props) {
   )
 }
 
+IngredientsGroup.propTypes = {
+  name: PropTypes.string.isRequired,
+  data: PropTypes.arrayOf(dataPropTypes).isRequired,
+};
 
 function BurgerIngredients() {
   const [current, setCurrent] = React.useState('bun');
