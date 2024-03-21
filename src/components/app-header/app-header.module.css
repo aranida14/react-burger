@@ -1,19 +1,19 @@
 .header {
   background: #1C1C21;
   height: 90px;
-
-  /* TODO remove border */
-  border: 1px solid greenyellow;
 }
+
 
 .menu {
   list-style-type: none;
+
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 
-  /* TODO remove border */
-  border: 1px solid orange
+  width: 1280px;
+  margin: 0 auto;
+  padding: 0;
 }
 
 .menu a {
@@ -29,11 +29,12 @@
 
 .burgerConstructor {
   flex: 1;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .orders {
-  flex: 1;
+  flex: 2;
+  justify-content: flex-start;
 }
 
 .logo {
@@ -41,6 +42,6 @@
 }
 
 .profile {
-  flex: 2;
-  justify-content: center;
+  flex: 3;
+  justify-content: flex-end;
 }

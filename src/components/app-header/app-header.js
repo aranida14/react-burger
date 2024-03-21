@@ -4,8 +4,9 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 function AppHeader() {
   return (
     <header className={ `${styles.header} mt-10` }>
-      <nav className={ `p-4` }>
-        <ul className={ styles.menu }>
+      <nav className={ `${styles.nav} pt-4 pb-4` }>
+        {/* p-4 */}
+        <ul className={ `${styles.menu} ` }>
           <li className={ `${styles.burgerConstructor} m-5 mr-7` }>
             <BurgerIcon type="primary" />
             <a className="text text_type_main-default ml-2" href="#">Конструктор</a>

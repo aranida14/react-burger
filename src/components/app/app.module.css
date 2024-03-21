@@ -5,7 +5,4 @@
 .main {
   display: flex;
   justify-content: center;
-
-  /* TODO remove border */
-  border: 1px solid magenta;
 }
