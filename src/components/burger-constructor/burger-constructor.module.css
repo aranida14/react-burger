@@ -1,0 +1,33 @@
+.section {
+  flex-basis: 600px;
+}
+
+.elementsContainer {
+  padding-left: 0;
+  list-style-type: none;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  overflow: auto;
+}
+
+.constructorElement {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.orderContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.sumContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
