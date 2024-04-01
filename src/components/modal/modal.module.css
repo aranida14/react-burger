@@ -1,0 +1,28 @@
+.modal {
+  background-color: #1C1C21;
+  border-radius: 20px;
+
+  z-index: 999;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 720px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.closeBtn {
+  background: inherit;
+  border: none;
+
+  display: flex;
+  align-items: flex-end;
+
+  cursor: pointer;
+}

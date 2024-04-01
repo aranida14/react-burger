@@ -1,9 +1,19 @@
+import React from 'react';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { data } from '../../utils/data';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
-function BurgerConstructor() {
-  const img = 'https://code.s3.yandex.net/react/code/bun-02-mobile.png';
+const BurgerConstructor = () => {
+  const [showModal, setShowModal] = React.useState(false);
+  
+  const handleClick = () => {
+    setShowModal(true);
+  }
+  
+  const orderId = '034536';
+
   return (
     <section className={ `${styles.section} pt-25 pl-4` }>
       <ul className={styles.elementsContainer}>
@@ -80,7 +90,10 @@ function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large">Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="large" onClick={handleClick}>Оформить заказ</Button>
+        <Modal isOpen={showModal} >
+          <OrderDetails id={orderId} />
+        </Modal>
       </div>
     </section>
   );

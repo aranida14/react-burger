@@ -5,7 +5,6 @@ function AppHeader() {
   return (
     <header className={ `${styles.header} mt-10` }>
       <nav className={ `${styles.nav} pt-4 pb-4` }>
-        {/* p-4 */}
         <ul className={ `${styles.menu} ` }>
           <li className={ `${styles.burgerConstructor} m-5 mr-7` }>
             <BurgerIcon type="primary" />

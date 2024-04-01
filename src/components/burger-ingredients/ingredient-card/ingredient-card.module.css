@@ -1,0 +1,19 @@
+.card {
+  position: relative;
+
+  cursor: pointer;
+
+  width: 268px;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: center;
+}
+.price {
+  margin-right: 8px;
+}
+
+.cardName {
+  height: 50px;
+}

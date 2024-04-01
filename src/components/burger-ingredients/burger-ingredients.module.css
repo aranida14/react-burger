@@ -20,39 +20,3 @@
   overflow-y: scroll;
   overflow-x: hidden;
 }
-
-.groupTitle {
-  text-align: start;
-}
-
-.groupList {
-  list-style-type: none;
-  padding-left: 0;
-
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-}
-
-.card {
-  position: relative;
-
-  width: 268px;
-}
-
-/* .card:nth-of-type(odd) {
-  margin-right: 24px;
-} */
-
-.priceContainer {
-  display: flex;
-  justify-content: center;
-}
-.price {
-  /* text-align: center; */
-  margin-right: 8px;
-}
-
-.cardName {
-  height: 50px;
-}
