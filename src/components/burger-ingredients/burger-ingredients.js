@@ -8,9 +8,9 @@ import { ingredientPropTypes } from '../../utils/types';
 const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = React.useState('bun');
 
-  const buns = ingredients.filter((item) => item.type === 'bun');
-  const sauces = ingredients.filter((item) => item.type === 'sauce');
-  const main = ingredients.filter((item) => item.type === 'main');
+  const buns = React.useMemo(() => ingredients.filter((item) => item.type === 'bun'), [ingredients]);
+  const sauces = React.useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
+  const main = React.useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
   return (
     <section className={ `${styles.section} mr-10` }>
       <h1 className={ `${styles.title} mt-10 text text_type_main-large` }>Соберите бургер</h1>
