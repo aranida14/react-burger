@@ -1,0 +1,50 @@
+.header {
+  background: #1C1C21;
+  height: 90px;
+}
+
+
+.menu {
+  list-style-type: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 1280px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  text-align: center;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+ 
+.menu li {
+  display: flex;
+}
+
+.burgerConstructor {
+  flex: 1;
+  justify-content: flex-start;
+}
+
+.orders {
+  flex: 2;
+  justify-content: flex-start;
+}
+
+.logo {
+  flex: 1;
+}
+
+.profile {
+  flex: 3;
+  justify-content: flex-end;
+}

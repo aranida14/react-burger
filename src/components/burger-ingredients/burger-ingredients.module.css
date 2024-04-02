@@ -1,0 +1,22 @@
+.section {
+  flex-basis: 600px;
+}
+
+.title {
+  text-align: start;
+}
+
+.tabs {
+  display: flex;
+  list-style-type: none;
+  /* justify-content: space-around; */
+}
+
+.ingredientsList {
+  padding-left: 0;
+  list-style-type: none;
+
+  height: 750px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
