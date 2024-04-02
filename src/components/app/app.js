@@ -4,7 +4,6 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-// const BASE_API_URL = 'https://norma.nomoreparties.space/api';
 const INGREDIENTS_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
           loading: false,
           hasError: false,
         });
-        // console.log(state);
       } catch (err) {
         setState({
           ...state,

@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsGroup from './ingredients-group/ingredients-group'; 
+import { ingredientPropTypes } from '../../utils/types';
 
-
-function BurgerIngredients({ingredients}) {
+const BurgerIngredients = ({ ingredients }) => {
   const [current, setCurrent] = React.useState('bun');
 
   const buns = ingredients.filter((item) => item.type === 'bun');
@@ -13,8 +14,6 @@ function BurgerIngredients({ingredients}) {
   return (
     <section className={ `${styles.section} mr-10` }>
       <h1 className={ `${styles.title} mt-10 text text_type_main-large` }>Соберите бургер</h1>
-      {/* тут будут ингредиенты для бургера BurgerIngredients */}
-
       <div className={ `${styles.tabs} mt-5 mb-10` }>
         <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
           Булки
@@ -33,6 +32,10 @@ function BurgerIngredients({ingredients}) {
       </ul>
     </section>
   );
-}
+};
+
+BurgerIngredients.propTypes = {
+  ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
+};
 
 export default BurgerIngredients;

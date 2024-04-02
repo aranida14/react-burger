@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import doneImagePath from '../../images/done.svg';
 
@@ -12,5 +13,9 @@ const OrderDetails = ({ id }) => {
     </div>
   );
 };
+
+OrderDetails.propTypes = {
+  id: PropTypes.string.isRequired,
+}
 
 export default OrderDetails;
