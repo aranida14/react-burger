@@ -19,10 +19,13 @@
 .menu a {
   color: white;
   text-decoration: none;
-  text-align:center;
+  text-align: center;
 
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
-
+ 
 .menu li {
   display: flex;
 }
