@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
@@ -6,7 +7,17 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 const modalRoot = document.getElementById('modal-root');
 
 const Modal = ({isOpen, onClose, title, children}) => {
-  // const [showModal, setShowModal] = React.useState(false);
+  React.useEffect(() => {
+    const close = (e) => {
+      if(e.key === 'Escape'){
+        onClose();
+      }
+    }
+    window.addEventListener('keydown', close);
+    return () => window.removeEventListener('keydown', close);
+  }, []);
+
+
   if (!isOpen) {
     return null;
   }
@@ -20,12 +31,9 @@ const Modal = ({isOpen, onClose, title, children}) => {
             <CloseIcon type="primary" />
           </button>
         </div>
-        
-          {children}
-        
-        
+          {children}        
       </div>
-      < ModalOverlay onClick={onClose} />
+      < ModalOverlay onClose={onClose} />
     </>)
     , modalRoot
   );

@@ -7,11 +7,6 @@ import OrderDetails from '../order-details/order-details';
 
 const BurgerConstructor = () => {
   const [showModal, setShowModal] = React.useState(false);
-  
-  const handleClick = () => {
-    setShowModal(true);
-  }
-  
   const orderId = '034536';
 
   return (
@@ -90,8 +85,8 @@ const BurgerConstructor = () => {
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large" onClick={handleClick}>Оформить заказ</Button>
-        <Modal isOpen={showModal} >
+        <Button htmlType="button" type="primary" size="large" onClick={() => setShowModal(true)}>Оформить заказ</Button>
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
           <OrderDetails id={orderId} />
         </Modal>
       </div>
