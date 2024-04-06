@@ -1,81 +1,60 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data } from '../../utils/data';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import { useSelector } from 'react-redux';
 
 const BurgerConstructor = () => {
   const [showModal, setShowModal] = React.useState(false);
   const orderId = '034536';
 
+  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+
   return (
     <section className={ `${styles.section} pt-25 pl-4` }>
       <ul className={styles.elementsContainer}>
-        <li className={ `${styles.constructorElement}` }>
-          {/* <DragIcon type="primary" /> */}
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${data[0].name} (верх)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[5].name}
-            price={data[5].price}
-            thumbnail={data[5].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[4].name}
-            price={data[4].price}
-            thumbnail={data[4].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[7].name}
-            price={data[7].price}
-            thumbnail={data[7].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[8].name}
-            price={data[8].price}
-            thumbnail={data[8].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[8].name}
-            price={data[8].price}
-            thumbnail={data[8].image}
-          />
+        <li className={ `${styles.constructorElement}`}>
+          {
+          bun ? <ConstructorElement
+                  type="top"
+                  isLocked={true}
+                  text={`${bun.name} (верх)`}
+                  price={bun.price}
+                  thumbnail={bun.image}
+                />
+          : <div className={ `${styles.placeholder} ${styles.placeholderTop} text text_type_main-default` }>Выберите булку</div>
+          }
         </li>
 
+        {
+          (ingredients && ingredients.length) ?
+          ingredients.map((ingredient) => (
+            <li className={styles.constructorElement} key={ingredient._id}>
+              <DragIcon type="primary" />
+              <ConstructorElement
+                text={ingredient.name}
+                price={ingredient.price}
+                thumbnail={ingredient.image}
+              />
+            </li>
+          ))
+          : (<li className={styles.constructorElement}>
+              <div className={ `${styles.placeholder} ${styles.placeholderPrimary} text text_type_main-default` }>Выберите начинку</div>
+            </li>)
+        }
+
         <li className={ `${styles.constructorElement}` }>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${data[0].name} (низ)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
-          />
+          {
+          bun ? <ConstructorElement
+                  type="bottom"
+                  isLocked={true}
+                  text={`${bun.name} (низ)`}
+                  price={bun.price}
+                  thumbnail={bun.image}
+                />
+          : <div className={ `${styles.placeholder} ${styles.placeholderBottom} text text_type_main-default` }>Выберите булку</div>
+          }
         </li>
       </ul>
 

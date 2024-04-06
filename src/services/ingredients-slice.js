@@ -30,7 +30,7 @@ export const fetchIngredients = () => async (dispatch) => {
   try {
     dispatch(fetchIngredientsRequest());
     const response = await fetch(INGREDIENTS_API_URL);
-    if (!response.ok) {
+    if (!response.ok) {//TODO can i use response for error message?
       throw new Error("API response not ok");
     }
     const json = await response.json();
