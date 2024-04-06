@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -10,6 +10,13 @@ const BurgerConstructor = () => {
   const orderId = '034536';
 
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+  const totalPrice = useMemo(() => {
+    let sum = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
+    if (bun) {
+      sum += bun.price * 2;
+    }
+    return sum;
+  }, [ingredients, bun]);
 
   return (
     <section className={ `${styles.section} pt-25 pl-4` }>
@@ -60,7 +67,7 @@ const BurgerConstructor = () => {
 
       <div className={ `${styles.orderContainer} mt-10`}>
         <div className={ `${styles.sumContainer} mr-10`}>
-          <span className={ `text text_type_digits-medium mr-3 ${styles.sum}`}>610</span>
+          <span className={ `text text_type_digits-medium mr-3 ${styles.sum}`}>{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
 
