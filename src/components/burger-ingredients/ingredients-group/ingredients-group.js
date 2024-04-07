@@ -12,7 +12,7 @@ const IngredientsGroup = ({name, type}) => {
   );
   
   return (
-    <li className={styles.group}>
+    <>
       <h2 className={ `${styles.groupTitle } text text_type_main-medium mb-6` }>{name}</h2>
       <ul className={styles.groupList}>
         {
@@ -21,7 +21,7 @@ const IngredientsGroup = ({name, type}) => {
           ))
         } 
       </ul>
-    </li>
+    </>
   )
 }
 
