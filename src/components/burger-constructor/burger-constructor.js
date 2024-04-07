@@ -5,7 +5,8 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder, hideOrder } from '../../services/order-slice';
-import { addIngredient, clearConstructor } from '../../services/burger-constructor-slice';
+import { addIngredient, clearConstructor, deleteIngredient } from '../../services/burger-constructor-slice';
+import { v4 as uuidv4 } from 'uuid';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -15,12 +16,17 @@ const BurgerConstructor = () => {
 
   const onConstructorClick = () => {//TODO remove, used for debug only
     if (allIngredients.length) {
-      dispatch(addIngredient(allIngredients[0]));
-      dispatch(addIngredient(allIngredients[1]));
-      dispatch(addIngredient(allIngredients[2]));
-      dispatch(addIngredient(allIngredients[2]));
-      dispatch(addIngredient(allIngredients[2]));
+      dispatch(addIngredient({...allIngredients[0], uuid: uuidv4() }));
+      dispatch(addIngredient({...allIngredients[1], uuid: uuidv4() }));
+      dispatch(addIngredient({...allIngredients[6], uuid: uuidv4() }));
+      dispatch(addIngredient({...allIngredients[6], uuid: uuidv4() }));
+      dispatch(addIngredient({...allIngredients[3], uuid: uuidv4() }));
     }
+  }
+
+  const handleIngredientDelete = (e, id) => {
+    dispatch(deleteIngredient(id));
+    e.stopPropagation();//TODO remove
   }
 
   const orderId = useSelector((state) => state.order.orderId);
@@ -43,7 +49,7 @@ const BurgerConstructor = () => {
       dispatch(clearConstructor());
     }
   }
-  const onClose = () => {
+  const handleDetailsClose = () => {
     dispatch(hideOrder());
   }
 
@@ -67,12 +73,13 @@ const BurgerConstructor = () => {
         {
           (ingredients && ingredients.length) ?
           ingredients.map((ingredient) => (
-            <li className={styles.constructorElement} key={ingredient._id}>
+            <li className={styles.constructorElement} key={ingredient.uuid}>
               <DragIcon type="primary" />
               <ConstructorElement
                 text={ingredient.name}
                 price={ingredient.price}
                 thumbnail={ingredient.image}
+                handleClose={(e) => handleIngredientDelete(e, ingredient.uuid)}
               />
             </li>
           ))
@@ -102,7 +109,7 @@ const BurgerConstructor = () => {
         </div>
 
         <Button htmlType="button" type="primary" size="large" onClick={onClick}>Оформить заказ</Button>
-        <Modal isOpen={!!orderId} onClose={onClose} >
+        <Modal isOpen={!!orderId} onClose={handleDetailsClose} >
           <OrderDetails />
         </Modal>
       </div>

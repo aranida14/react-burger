@@ -19,7 +19,7 @@ export const burgerConstructorSlice = createSlice({
     },
     deleteIngredient: (state, action) => {
       state.ingredients = state.ingredients
-        .filter((item) => item.id !== action.payload._id);
+        .filter((item) => item.uuid !== action.payload);
     },
     moveIngredient: (state, action) => {
       const { from, to } = action.payload;
