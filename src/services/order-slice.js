@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ORDERS_API_URL } from '../utils/api';
+import { request } from '../utils/utils';
 
 const initialState = {
   orderId: null,
@@ -22,7 +22,7 @@ export const orderSlice = createSlice({
     },
     createOrderFailure: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
     hideOrder: (state) => {
       state.orderId = null;
@@ -39,24 +39,16 @@ export const orderSlice = createSlice({
 //   }
 // }
 
-export const createOrder = (orderData) => async (dispatch) => {
-  try {
-    dispatch(createOrderRequest());
-    const response = await fetch(ORDERS_API_URL, {
-      method: "POST",
-      body: JSON.stringify({ingredients: orderData}),
-      headers: {
-          "Content-Type": "application/json; charset=UTF-8"
-      },
-    });
-    if (!response.ok) {
-      throw new Error("API response not ok");
-    }
-    const json = await response.json();
-    dispatch(createOrderSuccess(json));
-  } catch (err) {
-    dispatch(createOrderFailure(err));
-  }
+export const createOrder = (orderData) => (dispatch) => {
+  dispatch(createOrderRequest());
+  request('/orders', {
+    method: "POST",
+    body: JSON.stringify({ingredients: orderData}),
+    headers: {
+        "Content-Type": "application/json; charset=UTF-8"
+    },
+  }).then((response) => dispatch(createOrderSuccess(response)))
+  .catch((e) => dispatch(createOrderFailure(e)));
 }
 
 export const {

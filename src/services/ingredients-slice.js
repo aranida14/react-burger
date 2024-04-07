@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { INGREDIENTS_API_URL } from '../utils/api';
+import { request } from '../utils/utils';
 
 const initialState = {
   data: [],
@@ -21,31 +21,18 @@ export const ingredientsSlice = createSlice({
     },
     fetchIngredientsFailure: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload.error;
+      state.error = action.payload;
     },
   },
 });
 
-export const fetchIngredients = () => async (dispatch) => {
-  try {
-    dispatch(fetchIngredientsRequest());
-    const response = await fetch(INGREDIENTS_API_URL);
-    if (!response.ok) {
-      throw new Error("API response not ok");
-    }
-    const json = await response.json();
-    if (json && json.data) {
-      dispatch(fetchIngredientsSuccess(json.data));
-    } else {
-      throw new Error("API response has no data");
-    }
-  } catch (err) {
-    dispatch(fetchIngredientsFailure(err));
-  }
-  
+export const fetchIngredients = () => (dispatch) => {
+  dispatch(fetchIngredientsRequest());
+  request('/ingredients')
+    .then((response) => dispatch(fetchIngredientsSuccess(response.data)))
+    .catch((e) => dispatch(fetchIngredientsFailure(e)));  
 };
 
-// Action creators are generated for each case reducer function
 export const {
   fetchIngredientsRequest,
   fetchIngredientsSuccess,
