@@ -7,7 +7,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const modalRoot = document.getElementById('modal-root');
 
-const Modal = ({isOpen, onClose, title, children}) => {
+const Modal = ({ onClose, title, children }) => {
   React.useEffect(() => {
     const close = (e) => {
       if(e.key === 'Escape'){
@@ -17,11 +17,6 @@ const Modal = ({isOpen, onClose, title, children}) => {
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
   }, []);
-
-
-  if (!isOpen) {
-    return null;
-  }
 
   return ReactDOM.createPortal(
     (<>
@@ -41,7 +36,6 @@ const Modal = ({isOpen, onClose, title, children}) => {
 };
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   children: PropTypes.oneOfType([

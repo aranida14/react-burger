@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -105,16 +104,16 @@ const BurgerConstructor = () => {
         </div>
 
         <Button htmlType="button" disabled={!bun || !ingredients.length} type="primary" size="large" onClick={onClick}>Оформить заказ</Button>
-        <Modal isOpen={!!orderId} onClose={handleDetailsClose} >
-          <OrderDetails />
-        </Modal>
+
+        {!!orderId && (
+          <Modal onClose={handleDetailsClose}>
+            <OrderDetails />
+          </Modal>
+        )}
       </div>
     </section>
   );
 }
 
-BurgerConstructor.propTypes = {
-  onDropHandler: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

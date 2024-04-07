@@ -9,6 +9,5 @@ const checkResponse =  (response) => {
 
 export const request = (endpoint, options) => {
   const url = `${BASE_URL}${endpoint.startsWith('/') ? '': '/'}${endpoint}`;
-  console.log(url);
   return fetch(url, options).then(checkResponse);
 }

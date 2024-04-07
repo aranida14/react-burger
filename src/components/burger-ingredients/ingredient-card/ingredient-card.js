@@ -55,13 +55,15 @@ const IngredientCard = ({ data }) => {
           <div className={ `${styles.cardName} text text_type_main-default`}>{name}</div>
         </li>
         
-        <Modal
-          isOpen={currentIngredient && currentIngredient._id === _id}
-          onClose={onClose}
-          title="Детали ингредиента"
-        >
-          <IngredientDetails />
-        </Modal>
+        {currentIngredient && currentIngredient._id === _id &&
+          <Modal
+            onClose={onClose}
+            title="Детали ингредиента"
+          >
+            <IngredientDetails />
+          </Modal>
+        }
+        
       </>
   )
 }
