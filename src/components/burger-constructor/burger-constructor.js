@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder, hideOrder } from '../../services/order-slice';
-import { addIngredient, clearConstructor, deleteIngredient } from '../../services/burger-constructor-slice';
+import { clearConstructor } from '../../services/burger-constructor-slice';
 import { useDrop } from 'react-dnd';
+import ConstructorElementContainer from './constructor-element-container';
+import PlaceholderElement from './placeholder-element';
 
 const BurgerConstructor = ({ onDropHandler }) => {
   const dispatch = useDispatch();
@@ -24,11 +26,6 @@ const BurgerConstructor = ({ onDropHandler }) => {
       dragItem: monitor.getItem(),
     }),
   });
-
-
-  const handleIngredientDelete = (e, id) => {
-    dispatch(deleteIngredient(id));
-  }
 
   const orderId = useSelector((state) => state.order.orderId);
   const totalPrice = useMemo(() => {
@@ -59,53 +56,39 @@ const BurgerConstructor = ({ onDropHandler }) => {
       <ul className={styles.elementsContainer}>
         <li className={ `${styles.constructorElement}`}>
           {
-          bun ? <ConstructorElement
+          bun ? <div className={styles.ingredientContainer}><ConstructorElement
                   type="top"
                   isLocked={true}
                   text={`${bun.name} (верх)`}
                   price={bun.price}
                   thumbnail={bun.image}
-                />
-          : <div className={
-            `${styles.placeholder} 
-            ${styles.placeholderTop}
-            text text_type_main-default`
-        }>Выберите булку</div>
+                /></div>
+          : <PlaceholderElement type='top' />
           }
         </li>
 
         {
           (ingredients && ingredients.length) ?
-          ingredients.map((ingredient) => (
+          ingredients.map((ingredient, index) => (
             <li className={styles.constructorElement} key={ingredient.uuid}>
-              <DragIcon type="primary" />
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-                handleClose={(e) => handleIngredientDelete(e, ingredient.uuid)}
-              />
+              <ConstructorElementContainer ingredient={ingredient} index={index} />
             </li>
           ))
           : (<li className={styles.constructorElement}>
-              <div className={
-                  `${styles.placeholder} 
-                  ${styles.placeholderPrimary}
-                  text text_type_main-default`
-                }>Выберите начинку</div>
+               <PlaceholderElement type='primary' />
             </li>)
         }
 
         <li className={ `${styles.constructorElement}` }>
           {
-          bun ? <ConstructorElement
+          bun ? <div className={styles.ingredientContainer}><ConstructorElement
                   type="bottom"
                   isLocked={true}
                   text={`${bun.name} (низ)`}
                   price={bun.price}
                   thumbnail={bun.image}
-                />
-          : <div className={ `${styles.placeholder} ${styles.placeholderBottom} text text_type_main-default` }>Выберите булку</div>
+                /></div>
+          : <PlaceholderElement type='bottom' />
           }
         </li>
       </ul>

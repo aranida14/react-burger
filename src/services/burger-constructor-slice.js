@@ -22,10 +22,12 @@ export const burgerConstructorSlice = createSlice({
         .filter((item) => item.uuid !== action.payload);
     },
     moveIngredient: (state, action) => {
-      const { from, to } = action.payload;
-      const movingIngredient = state.ingredients[from];
-      state.ingredients[from] = state.ingredients[to];
-      state.ingredients[to] = movingIngredient;
+      const { fromIndex, toIndex } = action.payload;
+      const newIngredients = [...state.ingredients];
+      const movedIngredient = newIngredients[fromIndex];
+      newIngredients.splice(fromIndex, 1);
+      newIngredients.splice(toIndex, 0, movedIngredient);
+      state.ingredients = newIngredients;
     },
     clearConstructor: (state) => {
       state.bun = null;
