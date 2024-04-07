@@ -6,12 +6,13 @@ import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder, hideOrder } from '../../services/order-slice';
-import { clearConstructor } from '../../services/burger-constructor-slice';
+import { addIngredient, clearConstructor } from '../../services/burger-constructor-slice';
 import { useDrop } from 'react-dnd';
 import ConstructorElementContainer from './constructor-element-container';
 import PlaceholderElement from './placeholder-element';
+import { v4 as uuidv4 } from 'uuid';
 
-const BurgerConstructor = ({ onDropHandler }) => {
+const BurgerConstructor = () => {
   const dispatch = useDispatch();
 
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
@@ -26,6 +27,10 @@ const BurgerConstructor = ({ onDropHandler }) => {
       dragItem: monitor.getItem(),
     }),
   });
+
+  const onDropHandler = (ingredient) => {
+    dispatch(addIngredient({ ...ingredient, uuid: uuidv4() }));
+  };
 
   const orderId = useSelector((state) => state.order.orderId);
   const totalPrice = useMemo(() => {
