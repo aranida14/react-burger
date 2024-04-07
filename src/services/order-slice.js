@@ -54,7 +54,6 @@ export const createOrder = (orderData) => async (dispatch) => {
     }
     const json = await response.json();
     dispatch(createOrderSuccess(json));
-    console.log(json);
   } catch (err) {
     dispatch(createOrderFailure(err));
   }
