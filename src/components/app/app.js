@@ -8,7 +8,7 @@ import { fetchIngredients } from '../../services/ingredients-slice';
 
 function App() {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.ingredients);
+  const { data, isLoading, error } = useSelector((state) => state.ingredients);
 
   React.useEffect(() => {
     dispatch(fetchIngredients());
@@ -18,7 +18,7 @@ function App() {
     <div className={ styles.app }>
       <AppHeader />
       <main className={ styles.main }>
-        {/* {loading && 'Загрузка...'} */}
+        {/* {isLoading && 'Загрузка...'} */}
         {data && data.length && <BurgerIngredients />}
         <BurgerConstructor/>
       </main>

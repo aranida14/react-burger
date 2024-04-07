@@ -1,8 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { data } from '../utils/data';
-
-// const fakeIngredient = data[1];
-
 
 const initialState = {
   data: null,
@@ -23,8 +19,8 @@ export const currentIngredientSlice = createSlice({
 });
 
 export const {
-  showIngredient: showIngredient,
-  closeIngredient: closeIngredient,
+  showIngredient,
+  closeIngredient,
 } = currentIngredientSlice.actions;
 
 export default currentIngredientSlice.reducer;

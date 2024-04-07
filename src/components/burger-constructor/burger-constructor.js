@@ -1,15 +1,29 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { createOrder, hideOrder } from '../../services/order-slice';
+import { addIngredient, clearConstructor } from '../../services/burger-constructor-slice';
 
 const BurgerConstructor = () => {
-  const [showModal, setShowModal] = React.useState(false);
-  const orderId = '034536';
+  const dispatch = useDispatch();
 
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+  const { data: allIngredients } = useSelector((state) => state.ingredients);//TODO remove
+
+  const onConstructorClick = () => {//TODO remove, used for debug only
+    if (allIngredients.length) {
+      dispatch(addIngredient(allIngredients[0]));
+      dispatch(addIngredient(allIngredients[1]));
+      dispatch(addIngredient(allIngredients[2]));
+      dispatch(addIngredient(allIngredients[2]));
+      dispatch(addIngredient(allIngredients[2]));
+    }
+  }
+
+  const orderId = useSelector((state) => state.order.orderId);
   const totalPrice = useMemo(() => {
     let sum = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
     if (bun) {
@@ -18,9 +32,25 @@ const BurgerConstructor = () => {
     return sum;
   }, [ingredients, bun]);
 
+  const onClick = () => {
+    if (bun && ingredients.length) {
+      const orderData = [
+        bun._id,
+        ...ingredients.map(({ _id }) => _id),
+        bun._id,
+      ];
+      dispatch(createOrder(orderData));
+      dispatch(clearConstructor());
+    }
+  }
+  const onClose = () => {
+    dispatch(hideOrder());
+  }
+
   return (
     <section className={ `${styles.section} pt-25 pl-4` }>
-      <ul className={styles.elementsContainer}>
+      {/* TODO remove onClick!!! just for debugging */}
+      <ul className={styles.elementsContainer} onClick={onConstructorClick}>
         <li className={ `${styles.constructorElement}`}>
           {
           bun ? <ConstructorElement
@@ -71,9 +101,9 @@ const BurgerConstructor = () => {
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large" onClick={() => setShowModal(true)}>Оформить заказ</Button>
-        <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
-          <OrderDetails id={orderId} />
+        <Button htmlType="button" type="primary" size="large" onClick={onClick}>Оформить заказ</Button>
+        <Modal isOpen={!!orderId} onClose={onClose} >
+          <OrderDetails />
         </Modal>
       </div>
     </section>

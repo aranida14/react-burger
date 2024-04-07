@@ -3,7 +3,7 @@ import { INGREDIENTS_API_URL } from '../utils/api';
 
 const initialState = {
   data: [],
-  loading: false,
+  isLoading: false,
   error: null,
 }
 
@@ -12,15 +12,15 @@ export const ingredientsSlice = createSlice({
   initialState,
   reducers: {
     fetchIngredientsRequest: (state) => {
-      state.loading = true;
+      state.isLoading = true;
       state.error = null;
     },
     fetchIngredientsSuccess: (state, action) => {
-      state.loading = false;
+      state.isLoading = false;
       state.data = action.payload;
     },
     fetchIngredientsFailure: (state, action) => {
-      state.loading = false;
+      state.isLoading = false;
       state.error = action.payload.error;
     },
   },
@@ -30,7 +30,7 @@ export const fetchIngredients = () => async (dispatch) => {
   try {
     dispatch(fetchIngredientsRequest());
     const response = await fetch(INGREDIENTS_API_URL);
-    if (!response.ok) {//TODO can i use response for error message?
+    if (!response.ok) {
       throw new Error("API response not ok");
     }
     const json = await response.json();
@@ -38,7 +38,7 @@ export const fetchIngredients = () => async (dispatch) => {
       dispatch(fetchIngredientsSuccess(json.data));
     } else {
       throw new Error("API response has no data");
-    }    
+    }
   } catch (err) {
     dispatch(fetchIngredientsFailure(err));
   }
