@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -6,27 +7,27 @@ import OrderDetails from '../order-details/order-details';
 import { useSelector, useDispatch } from 'react-redux';
 import { createOrder, hideOrder } from '../../services/order-slice';
 import { addIngredient, clearConstructor, deleteIngredient } from '../../services/burger-constructor-slice';
-import { v4 as uuidv4 } from 'uuid';
+import { useDrop } from 'react-dnd';
 
-const BurgerConstructor = () => {
+const BurgerConstructor = ({ onDropHandler }) => {
   const dispatch = useDispatch();
 
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
-  const { data: allIngredients } = useSelector((state) => state.ingredients);//TODO remove
 
-  const onConstructorClick = () => {//TODO remove, used for debug only
-    if (allIngredients.length) {
-      dispatch(addIngredient({...allIngredients[0], uuid: uuidv4() }));
-      dispatch(addIngredient({...allIngredients[1], uuid: uuidv4() }));
-      dispatch(addIngredient({...allIngredients[6], uuid: uuidv4() }));
-      dispatch(addIngredient({...allIngredients[6], uuid: uuidv4() }));
-      dispatch(addIngredient({...allIngredients[3], uuid: uuidv4() }));
-    }
-  }
+  const [{ dragItem, canDrop }, dropRef] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      onDropHandler(item);
+    },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+      dragItem: monitor.getItem(),
+    }),
+  });
+
 
   const handleIngredientDelete = (e, id) => {
     dispatch(deleteIngredient(id));
-    e.stopPropagation();//TODO remove
   }
 
   const orderId = useSelector((state) => state.order.orderId);
@@ -54,9 +55,8 @@ const BurgerConstructor = () => {
   }
 
   return (
-    <section className={ `${styles.section} pt-25 pl-4` }>
-      {/* TODO remove onClick!!! just for debugging */}
-      <ul className={styles.elementsContainer} onClick={onConstructorClick}>
+    <section ref={dropRef} className={ `${styles.section} pt-25 pl-4` }>
+      <ul className={styles.elementsContainer}>
         <li className={ `${styles.constructorElement}`}>
           {
           bun ? <ConstructorElement
@@ -66,7 +66,11 @@ const BurgerConstructor = () => {
                   price={bun.price}
                   thumbnail={bun.image}
                 />
-          : <div className={ `${styles.placeholder} ${styles.placeholderTop} text text_type_main-default` }>Выберите булку</div>
+          : <div className={
+            `${styles.placeholder} 
+            ${styles.placeholderTop}
+            text text_type_main-default`
+        }>Выберите булку</div>
           }
         </li>
 
@@ -84,7 +88,11 @@ const BurgerConstructor = () => {
             </li>
           ))
           : (<li className={styles.constructorElement}>
-              <div className={ `${styles.placeholder} ${styles.placeholderPrimary} text text_type_main-default` }>Выберите начинку</div>
+              <div className={
+                  `${styles.placeholder} 
+                  ${styles.placeholderPrimary}
+                  text text_type_main-default`
+                }>Выберите начинку</div>
             </li>)
         }
 
@@ -116,5 +124,9 @@ const BurgerConstructor = () => {
     </section>
   );
 }
+
+BurgerConstructor.propTypes = {
+  onDropHandler: PropTypes.func.isRequired,
+};
 
 export default BurgerConstructor;

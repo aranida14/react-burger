@@ -52,3 +52,7 @@
 .placeholderBottom {
   border-radius: var(--bottom-constructor-item-border-radius);
 }
+
+.higlighted {
+  border-color:blueviolet;
+}
