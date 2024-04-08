@@ -1,5 +1,9 @@
 .section {
   flex-basis: 600px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .title {
@@ -9,14 +13,11 @@
 .tabs {
   display: flex;
   list-style-type: none;
-  /* justify-content: space-around; */
 }
 
 .ingredientsList {
   padding-left: 0;
   list-style-type: none;
 
-  height: 750px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: auto;
 }

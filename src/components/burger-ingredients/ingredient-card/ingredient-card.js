@@ -43,7 +43,7 @@ const IngredientCard = ({ data }) => {
       <>
         <li
           ref={dragRef}
-          className={ `${styles.card} ml-4 mr-2 mb-10 ${isDrag ? styles.isDrag : ''}` }
+          className={ `${styles.card} ml-4 mr-2 mb-8 ${isDrag ? styles.isDrag : ''}` }
           onClick={handleClick}
         >
           { count > 0 && <Counter count={count} size="default" extraClass="m-1" /> }

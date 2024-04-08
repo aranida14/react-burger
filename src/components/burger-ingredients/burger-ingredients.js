@@ -29,7 +29,7 @@ const BurgerIngredients = () => {
   return (
     <section className={ `${styles.section} mr-10` }>
       <h1 className={ `${styles.title} mt-10 text text_type_main-large` }>Соберите бургер</h1>
-      <div className={ `${styles.tabs} mt-5 mb-10` }>
+      <div className={ `${styles.tabs} mt-5` }>
         <Tab value="bun" active={currentTab === 'bun'}>
           Булки
         </Tab>
@@ -41,13 +41,13 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
       <ul className={ styles.ingredientsList }>
-        <li ref={refCallback} data-type="bun">
+        <li className={ `${styles.group} mt-10` } ref={refCallback} data-type="bun">
           <IngredientsGroup name="Булки" type="bun"/>
         </li>
-        <li ref={refCallback} data-type="sauce">
+        <li className='mt-10' ref={refCallback} data-type="sauce">
           <IngredientsGroup name="Соусы" type="sauce"/>
         </li>
-        <li ref={refCallback} data-type="main">
+        <li className='mt-10' ref={refCallback} data-type="main">
           <IngredientsGroup name="Начинки" type="main"/>
         </li>
       </ul>
