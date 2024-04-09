@@ -1,97 +1,119 @@
-import React from 'react';
+import { useMemo } from 'react';
 import styles from './burger-constructor.module.css';
-import { Button, ConstructorElement, CurrencyIcon, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { data } from '../../utils/data';
+import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import { useSelector, useDispatch } from 'react-redux';
+import { createOrder, hideOrder } from '../../services/order-slice';
+import { addIngredient, clearConstructor } from '../../services/burger-constructor-slice';
+import { useDrop } from 'react-dnd';
+import ConstructorElementContainer from './constructor-element-container';
+import PlaceholderElement from './placeholder-element';
+import { v4 as uuidv4 } from 'uuid';
 
 const BurgerConstructor = () => {
-  const [showModal, setShowModal] = React.useState(false);
-  const orderId = '034536';
+  const dispatch = useDispatch();
+
+  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+
+  const [{ dragItem, canDrop }, dropRef] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      onDropHandler(item);
+    },
+    collect: (monitor) => ({
+      canDrop: monitor.canDrop(),
+      dragItem: monitor.getItem(),
+    }),
+  });
+
+  const onDropHandler = (ingredient) => {
+    dispatch(addIngredient({ ...ingredient, uuid: uuidv4() }));
+  };
+
+  const orderId = useSelector((state) => state.order.orderId);
+  const totalPrice = useMemo(() => {
+    let sum = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
+    if (bun) {
+      sum += bun.price * 2;
+    }
+    return sum;
+  }, [ingredients, bun]);
+
+  const onClick = () => {
+    if (bun && ingredients.length) {
+      const orderData = [
+        bun._id,
+        ...ingredients.map(({ _id }) => _id),
+        bun._id,
+      ];
+      dispatch(createOrder(orderData));
+      dispatch(clearConstructor());
+    }
+  }
+  const handleDetailsClose = () => {
+    dispatch(hideOrder());
+  }
 
   return (
-    <section className={ `${styles.section} pt-25 pl-4` }>
+    <section ref={dropRef} className={ `${styles.section} pt-25 pl-4` }>
       <ul className={styles.elementsContainer}>
-        <li className={ `${styles.constructorElement}` }>
-          {/* <DragIcon type="primary" /> */}
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${data[0].name} (верх)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[5].name}
-            price={data[5].price}
-            thumbnail={data[5].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[4].name}
-            price={data[4].price}
-            thumbnail={data[4].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[7].name}
-            price={data[7].price}
-            thumbnail={data[7].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[8].name}
-            price={data[8].price}
-            thumbnail={data[8].image}
-          />
-        </li>
-        
-        <li className={styles.constructorElement}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            text={data[8].name}
-            price={data[8].price}
-            thumbnail={data[8].image}
-          />
+        <li className={ `${styles.constructorElement}`}>
+          {
+          bun ? <div className={styles.ingredientContainer}><ConstructorElement
+                  type="top"
+                  isLocked={true}
+                  text={`${bun.name} (верх)`}
+                  price={bun.price}
+                  thumbnail={bun.image}
+                /></div>
+          : <PlaceholderElement type='top' />
+          }
         </li>
 
+        {
+          (ingredients && ingredients.length) ?
+          ingredients.map((ingredient, index) => (
+            <li className={styles.constructorElement} key={ingredient.uuid}>
+              <ConstructorElementContainer ingredient={ingredient} index={index} />
+            </li>
+          ))
+          : (<li className={styles.constructorElement}>
+               <PlaceholderElement type='primary' />
+            </li>)
+        }
+
         <li className={ `${styles.constructorElement}` }>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${data[0].name} (низ)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
-          />
+          {
+          bun ? <div className={styles.ingredientContainer}><ConstructorElement
+                  type="bottom"
+                  isLocked={true}
+                  text={`${bun.name} (низ)`}
+                  price={bun.price}
+                  thumbnail={bun.image}
+                /></div>
+          : <PlaceholderElement type='bottom' />
+          }
         </li>
       </ul>
 
       <div className={ `${styles.orderContainer} mt-10`}>
         <div className={ `${styles.sumContainer} mr-10`}>
-          <span className={ `text text_type_digits-medium mr-3 ${styles.sum}`}>610</span>
+          <span className={ `text text_type_digits-medium mr-3 ${styles.sum}`}>{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
 
-        <Button htmlType="button" type="primary" size="large" onClick={() => setShowModal(true)}>Оформить заказ</Button>
-        <Modal isOpen={showModal} onClose={() => setShowModal(false)} >
-          <OrderDetails id={orderId} />
-        </Modal>
+        <Button htmlType="button" disabled={!bun || !ingredients.length} type="primary" size="large" onClick={onClick}>Оформить заказ</Button>
+
+        {!!orderId && (
+          <Modal onClose={handleDetailsClose}>
+            <OrderDetails />
+          </Modal>
+        )}
       </div>
     </section>
   );
 }
+
 
 export default BurgerConstructor;

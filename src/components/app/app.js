@@ -3,48 +3,28 @@ import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-
-const INGREDIENTS_API_URL = 'https://norma.nomoreparties.space/api/ingredients';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchIngredients } from '../../services/ingredients-slice';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 function App() {
-  const [ingredientsData, setIngredientsData] = React.useState({
-    ingredients: [],
-    loading: true,
-    hasError: false,
-  });
-  
+  const dispatch = useDispatch();
+  const { data, isLoading, error } = useSelector((state) => state.ingredients);
 
   React.useEffect(() => {
-    const getIngredients = async () => {
-      try {
-        setIngredientsData({...ingredientsData, loading: true, hasError: false});
-        const response = await fetch(INGREDIENTS_API_URL);
-        if (!response.ok) {
-          throw new Error("Api response not ok");
-        }
-        const json = await response.json();
-        setIngredientsData({
-          ingredients: json.data,
-          loading: false,
-          hasError: false,
-        });
-      } catch (err) {
-        setIngredientsData({
-          ...ingredientsData,
-          loading: false,
-          hasError: true
-        });
-      }  
-    };
-    getIngredients();
-  }, [])
+    dispatch(fetchIngredients());
+  }, []);
 
   return (
     <div className={ styles.app }>
       <AppHeader />
       <main className={ styles.main }>
-        <BurgerIngredients ingredients={ingredientsData.ingredients}/>
-        <BurgerConstructor ingredients={ingredientsData.ingredients}/>
+        <DndProvider backend={HTML5Backend}>
+          {/* {isLoading && 'Загрузка...'} */}
+          {data && data.length && <BurgerIngredients />}
+          <BurgerConstructor /> 
+        </DndProvider>
       </main>
     </div>
   );

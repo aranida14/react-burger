@@ -3,7 +3,8 @@
 
   cursor: pointer;
 
-  width: 268px;
+  max-width: 260px;
+  background-color: #131316;
 }
 
 .priceContainer {
@@ -16,4 +17,8 @@
 
 .cardName {
   height: 50px;
+}
+
+.isDrag {
+  opacity: 0.3;
 }

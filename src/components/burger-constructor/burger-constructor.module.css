@@ -1,5 +1,9 @@
 .section {
   flex-basis: 600px;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .elementsContainer {
@@ -14,16 +18,29 @@
 }
 
 .constructorElement {
+  gap: 8px;
+}
+
+.constructorElement:last-of-type {
+  padding-bottom: 10px;
+}
+
+.constructorElement:first-of-type {
+  padding-top: 10px;
+}
+
+.ingredientContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 8px;
 }
 
 .orderContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+
+  padding-bottom: 20px;
 }
 
 .sumContainer {

@@ -1,0 +1,13 @@
+.ingredientContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  cursor: pointer;
+  opacity: 1;
+}
+
+
+.isDrag {
+  opacity: 0;
+}
