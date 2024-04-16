@@ -5,6 +5,10 @@
   align-self: stretch;
 }
 
+.nav {
+  display: flex;
+  justify-content: center;
+}
 
 .menu {
   list-style-type: none;
@@ -14,7 +18,7 @@
   align-items: center;
 
   width: 1280px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
 }
 

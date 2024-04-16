@@ -6,7 +6,7 @@ function AppHeader() {
     <header className={ `${styles.header} mt-10` }>
       <nav className={ `${styles.nav} pt-4 pb-4` }>
         <ul className={ `${styles.menu} ` }>
-          <li className={ `${styles.burgerConstructor} m-5 mr-7` }>
+          <li className={ `${styles.burgerConstructor} m-5 ` }>
             <a href="#">
               <BurgerIcon type="primary" />
               <span className="text text_type_main-default ml-2">Конструктор</span>
@@ -18,7 +18,12 @@ function AppHeader() {
               <span className="text text_type_main-default text_color_inactive ml-2">Лента заказов</span>
             </a>
           </li>
-          <li className={ styles.logo }><Logo /></li>
+          <li className={ `${styles.logo} mr-9` }>
+            <a href="#">
+              <Logo />
+            </a>
+            
+          </li>
           <li className={ `${styles.profile} m-5` }>
             <a href="#">
               <ProfileIcon type="secondary" />
