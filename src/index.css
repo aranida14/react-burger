@@ -8,3 +8,13 @@ body {
   background: #131316;
   color: white;
 }
+
+.mainContainer {
+  text-align: center;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}

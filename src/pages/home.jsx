@@ -1,23 +1,23 @@
-import React from 'react';
-import styles from './app.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { useEffect } from 'react';
+import styles from './home.module.css';
+import AppHeader from '../components/app-header/app-header';
+import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../components/burger-constructor/burger-constructor';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchIngredients } from '../../services/ingredients-slice';
+import { fetchIngredients } from '../services/ingredients-slice';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-function App() {
+export const HomePage = () => {
   const dispatch = useDispatch();
   const { data, isLoading, error } = useSelector((state) => state.ingredients);
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(fetchIngredients());
   }, []);
 
   return (
-    <div className={ styles.app }>
+    <div className='mainContainer'>
       <AppHeader />
       <main className={ styles.main }>
         <DndProvider backend={HTML5Backend}>
@@ -29,5 +29,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

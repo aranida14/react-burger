@@ -1,6 +1,8 @@
 .header {
   background: #1C1C21;
   height: 90px;
+
+  align-self: stretch;
 }
 
 
