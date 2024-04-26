@@ -24,3 +24,7 @@
 .routeButton {
   margin-right: -32px;
 }
+
+.error {
+  color: red;
+}
