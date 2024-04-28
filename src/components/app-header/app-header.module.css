@@ -26,10 +26,15 @@
   color: white;
   text-decoration: none;
   text-align: center;
+  opacity: 1;
 
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
+}
+
+.menu a:hover {
+  opacity: 0.7;
 }
  
 .menu li {
