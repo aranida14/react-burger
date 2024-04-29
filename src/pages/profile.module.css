@@ -19,17 +19,19 @@
   gap: 32px;
 }
 
-.menu a {
+.link {
   text-decoration: none;
   color: inherit;
-}
+  cursor: pointer;
 
-.menuItem {
-  display: block;
+  background: inherit;
+  border: none;
+  padding: 0;
+
   opacity: 1;
 }
 
-.menuItem:hover {
+.link:hover {
   opacity: 0.7;
 }
 

@@ -3,6 +3,7 @@ import ingredientsReducer from './ingredients-slice';
 import burgerConstructorReducer from './burger-constructor-slice';
 import currentIngredientReducer from './current-ingredient-slice';
 import orderReducer from './order-slice';
+import userReducer from './user-slice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     burgerConstructor: burgerConstructorReducer,
     currentIngredient: currentIngredientReducer,
     order: orderReducer,
+    user: userReducer,
   }
 });

@@ -1,9 +1,18 @@
 import styles from './profile.module.css';
 import AppHeader from '../components/app-header/app-header';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { logout } from '../services/user-slice';
+import { useDispatch } from 'react-redux';
 
 export const ProfilePage = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('refreshToken');
+    dispatch(logout(token));
+  };
 
   const hint = (location.pathname === '/profile') ? (
     <p className={`${styles.description} text text_type_main-default text_color_inactive`}>
@@ -24,30 +33,32 @@ export const ProfilePage = () => {
             <NavLink
               to=""
               end
+              className={styles.link}
             >
               {({isActive}) => (
                 <span 
-                  className={`${styles.menuItem} text text_type_main-medium ${isActive ? '' : 'text_color_inactive'}`}>
+                  className={`text text_type_main-medium ${isActive ? '' : 'text_color_inactive'}`}>
                     Профиль
                 </span>
               )}
             </NavLink>
             <NavLink
               to="orders"
+              className={styles.link}
             >
               {({isActive}) => (
                 <span 
-                  className={`${styles.menuItem} text text_type_main-medium ${isActive ? '' : 'text_color_inactive'}`}>
+                  className={`text text_type_main-medium ${isActive ? '' : 'text_color_inactive'}`}>
                     История заказов
                 </span>
               )}
             </NavLink>
-            <Link>
+            <button className={styles.link} onClick={handleLogout}>
               <span 
-                className={`${styles.menuItem} text text_type_main-medium text_color_inactive`}>
+                className={`text text_type_main-medium text_color_inactive`}>
                   Выход
               </span>
-            </Link>
+            </button>
           </nav>
           { hint }
         </section>
