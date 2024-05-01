@@ -39,7 +39,7 @@ export const ResetPasswordPage = () => {
       if (data.success) {
         setErrorMsg(null);
         localStorage.removeItem('isPasswordReset');
-        navigate('/', { replace: true });
+        navigate('/login', { replace: true });
       } else {
         setErrorMsg('Некорректно введён код из письма');
       }
