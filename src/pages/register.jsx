@@ -12,7 +12,7 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { registerUserError, userData } = useSelector((state) => state.user);  
+  const { registerUserError, user } = useSelector((state) => state.user);  
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -32,7 +32,7 @@ export const RegisterPage = () => {
     dispatch(registerUser(user));
   };
 
-  if (userData) {
+  if (user) {
     return (
       <Navigate to={'/'} />
     );

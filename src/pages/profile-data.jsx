@@ -1,21 +1,35 @@
 import styles from './profile.module.css';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateUser, updateUserResetError } from '../services/user-slice';
 
 export const ProfileDataPage = () => {
-  const [name, setName] = useState('');
-  const [login, setLogin] = useState('');
+  const { user, updateUserError } = useSelector((state) => state.user);
+  // console.log(user);
+  const [ currentName, currentEmail ] =
+    user ? [user.name, user.email] : ['', ''];
+  const [name, setName] = useState(currentName);
+  const [email, setEmail] = useState(currentEmail);
   const [password, setPassword] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef(null);
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsEditing(false);
+    setName(currentName);
+    setEmail(currentEmail);
+    setPassword('');
+  }, [user]);
+
   const changeName = (e) => {
     setName(e.target.value);
     setIsEditing(true);
   };
 
   const changeLogin = (e) => {
-    setLogin(e.target.value);
+    setEmail(e.target.value);
     setIsEditing(true);
   };
 
@@ -24,8 +38,20 @@ export const ProfileDataPage = () => {
     setIsEditing(true);
   };
 
-  const saveUserData = (e) => {
+  const submitUserUpdate = (e) => {
     e.preventDefault();
+    const newUserData = {};
+    if (name !== currentName) {
+      newUserData.name = name;
+    }
+    if (email !== currentEmail) {
+      newUserData.email = email;
+    }
+    if (password) {
+      newUserData.password = password;
+    }
+    dispatch(updateUser(newUserData));
+    //TODO вывести сообщение об успехе
   };
 
   const onIconClick = (e) => {
@@ -34,10 +60,15 @@ export const ProfileDataPage = () => {
 
   const resetForm = (e) => {
     setIsEditing(false);
+    setName(currentName);
+    setEmail(currentEmail);
+    setPassword('');
+    dispatch(updateUserResetError());
   }
   return (
     <section className={styles.formContainer}>
-      <form onSubmit={saveUserData}>
+      {updateUserError && <p className={styles.error}>{updateUserError}</p>}
+      <form onSubmit={submitUserUpdate}>
         <Input
           type={'text'}
           placeholder={'Имя'}
@@ -52,7 +83,7 @@ export const ProfileDataPage = () => {
         />
         <EmailInput
           name={'email'}
-          value={login}
+          value={email}
           onChange={changeLogin}
           isIcon={true}
           extraClass='mt-6'

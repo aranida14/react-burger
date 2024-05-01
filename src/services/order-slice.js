@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { request } from '../utils/utils';
+import { request } from '../utils/api';
 
 const initialState = {
   orderId: null,

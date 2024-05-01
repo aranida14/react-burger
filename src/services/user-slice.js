@@ -1,12 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { request } from "../utils/utils";
+import { fetchWithRefresh, request } from "../utils/api";
 
 const initialState = {
-  userData: null,
+  user: null,
+  isAuthChecked: false,
+  // loggedIn: false,
   registerUserError: null,
   loginError: null,
   logoutError: null,
-
+  getUserError: null,
+  updateUserError: null,
+  // userUpdated: false,
 };
 
 
@@ -14,32 +18,48 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getUserRequest: (state) => {
-    
+    setAuthChecked: (state, action) => {
+      state.isAuthChecked = action.payload;
     },
-    getUserFailure: (state) => {
-      
+    getUserFailure: (state, action) => {
+      state.getUserError = action.payload.message;
+    },
+    getUserSuccess: (state, action) => {
+      state.getUserError = null;
+      state.user = action.payload.user;
+    },
+    updateUserFailure: (state, action) => {
+      state.updateUserError = action.payload.message;
+      // state.userUpdated = false;
+    },
+    updateUserResetError: (state) => {
+      state.updateUserError = null;
+    },
+    updateUserSuccess: (state, action) => {
+      state.updateUserError = null;
+      state.user = action.payload.user;
+      // state.userUpdated = true;
     },
     registerUserFailure: (state, action) => {
-      state.registerUserError = action.payload;
+      state.registerUserError = action.payload.message;
     },
     registerUserSuccess: (state, action) => {
       state.registerUserError = null;
-      state.userData = action.payload.user;
+      state.user = action.payload.user;
     },
     loginFailure: (state, action) => {
-      state.loginError = action.payload;
+      state.loginError = action.payload.message;
     },
     loginSuccess: (state, action) => {
       state.loginError = null;
-      state.userData = action.payload.user;
+      state.user = action.payload.user;
     },
     logoutFailure: (state, action) => {
-      state.logoutError = action.payload;
+      state.logoutError = action.payload.message;
     },
     logoutSuccess: (state) => {
       state.logoutError = null;
-      state.userData = null;
+      state.user = null;
     },
 
   },
@@ -73,10 +93,10 @@ export const login = (userData) => (dispatch) => {
   }).catch((e) => dispatch(loginFailure(e)));
 };
 
-export const logout = (token) => (dispatch) => {
+export const logout = () => (dispatch) => {
   request('/auth/logout', {
     method: "POST",
-    body: JSON.stringify({ token }),
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
     headers: {
         "Content-Type": "application/json; charset=UTF-8"
     },
@@ -87,8 +107,33 @@ export const logout = (token) => (dispatch) => {
   }).catch((e) => dispatch(logoutFailure(e)));
 };
 
+export const getUser = () => (dispatch) => {
+  fetchWithRefresh('/auth/user', {
+    headers: {
+        "authorization": localStorage.getItem('accessToken')
+    },
+  }).then((response) => dispatch(getUserSuccess(response)))
+  .catch((e) => dispatch(getUserFailure(e)));
+};
+
+export const updateUser = (userData) => (dispatch) => {
+  fetchWithRefresh('/auth/user', {
+    method: "PATCH",
+    body: JSON.stringify(userData),
+    headers: {
+        "authorization": localStorage.getItem('accessToken'),
+        "Content-Type": "application/json; charset=UTF-8"
+    },
+  }).then((response) => dispatch(updateUserSuccess(response)))
+  .catch((e) => dispatch(updateUserFailure(e)));
+};
+
 export const {
-  // getUserFailure,
+  getUserSuccess,
+  getUserFailure,
+  updateUserSuccess,
+  updateUserFailure,
+  updateUserResetError,
   // getUserRequest,
   registerUserSuccess,
   registerUserFailure,

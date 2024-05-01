@@ -11,7 +11,7 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { loginError, userData } = useSelector((state) => state.user);
+  const { loginError, user } = useSelector((state) => state.user);
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -27,7 +27,7 @@ export const LoginPage = () => {
     dispatch(login(user));
   }
 
-  if (userData) {
+  if (user) {
     return (
       <Navigate to={'/'} />
     );
@@ -47,12 +47,14 @@ export const LoginPage = () => {
             value={email}
             onChange={changeEmail}
             isIcon={false}
+            required
             extraClass='mt-6'
           />
           <PasswordInput
             name={'password'}
             value={password}
             onChange={changePassword}
+            required
             extraClass="mt-6"
           />
           <Button

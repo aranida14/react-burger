@@ -10,8 +10,7 @@ export const ProfilePage = () => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    const token = localStorage.getItem('refreshToken');
-    dispatch(logout(token));
+    dispatch(logout());
   };
 
   const hint = (location.pathname === '/profile') ? (

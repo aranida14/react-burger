@@ -2,7 +2,7 @@ import styles from './login.module.css';
 import AppHeader from '../components/app-header/app-header';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { request } from '../utils/utils';
+import { request } from '../utils/api';
 import { useState } from 'react';
 
 export const ForgotPasswordPage = () => {

@@ -9,8 +9,16 @@ import {
   ProfileDataPage,
   OrdersHistoryPage
 } from '../../pages';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getUser } from '../../services/user-slice';
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
   return (
     <Router>
       <Routes>

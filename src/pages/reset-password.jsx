@@ -3,7 +3,7 @@ import AppHeader from '../components/app-header/app-header';
 import { Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { request } from '../utils/utils';
+import { request } from '../utils/api';
 
 export const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
