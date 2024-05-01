@@ -1,5 +1,4 @@
 import styles from './login.module.css';
-import AppHeader from '../components/app-header/app-header';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { request } from '../utils/api';
@@ -22,6 +21,7 @@ export const ForgotPasswordPage = () => {
       },
     }).then((data) => {
       if (data.success) {
+        localStorage.setItem('isPasswordReset', true);
         navigate('/reset-password');
       } else {
         console.error('Ошибка');
@@ -30,8 +30,7 @@ export const ForgotPasswordPage = () => {
     }).catch((e) => console.error(e));
   };
   return (
-    <div className='mainContainer'>
-      <AppHeader />
+    <>
       <div className={styles.container}>
         <h2 className='text text_type_main-medium'>Восстановление пароля</h2>
         <form onSubmit={resetPassword}>
@@ -63,6 +62,6 @@ export const ForgotPasswordPage = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 };

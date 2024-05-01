@@ -1,7 +1,6 @@
 import styles from './login.module.css';
-import AppHeader from '../components/app-header/app-header';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../services/user-slice';
@@ -12,7 +11,7 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { registerUserError, user } = useSelector((state) => state.user);  
+  const { registerUserError } = useSelector((state) => state.user);  
 
   const changeName = (e) => {
     setName(e.target.value);
@@ -32,15 +31,8 @@ export const RegisterPage = () => {
     dispatch(registerUser(user));
   };
 
-  if (user) {
-    return (
-      <Navigate to={'/'} />
-    );
-  }
-
   return (
-    <div className='mainContainer'>
-      <AppHeader />
+    <>
       <div className={styles.container}>
         <h2 className='text text_type_main-medium'>Регистрация</h2>
         { registerUserError
@@ -87,6 +79,6 @@ export const RegisterPage = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 };

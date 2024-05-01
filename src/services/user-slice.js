@@ -4,7 +4,6 @@ import { fetchWithRefresh, request } from "../utils/api";
 const initialState = {
   user: null,
   isAuthChecked: false,
-  // loggedIn: false,
   registerUserError: null,
   loginError: null,
   logoutError: null,
@@ -23,6 +22,7 @@ export const userSlice = createSlice({
     },
     getUserFailure: (state, action) => {
       state.getUserError = action.payload.message;
+      state.user = null;
     },
     getUserSuccess: (state, action) => {
       state.getUserError = null;
@@ -113,7 +113,11 @@ export const getUser = () => (dispatch) => {
         "authorization": localStorage.getItem('accessToken')
     },
   }).then((response) => dispatch(getUserSuccess(response)))
-  .catch((e) => dispatch(getUserFailure(e)));
+  .catch((e) => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    return dispatch(getUserFailure(e));
+  }).finally(() => dispatch(setAuthChecked(true)));
 };
 
 export const updateUser = (userData) => (dispatch) => {
@@ -129,12 +133,12 @@ export const updateUser = (userData) => (dispatch) => {
 };
 
 export const {
+  setAuthChecked,
   getUserSuccess,
   getUserFailure,
   updateUserSuccess,
   updateUserFailure,
   updateUserResetError,
-  // getUserRequest,
   registerUserSuccess,
   registerUserFailure,
   loginSuccess,

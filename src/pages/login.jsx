@@ -1,7 +1,6 @@
 import styles from './login.module.css';
-import AppHeader from '../components/app-header/app-header';
 import { Button, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../services/user-slice';
@@ -11,7 +10,7 @@ export const LoginPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  const { loginError, user } = useSelector((state) => state.user);
+  const { loginError } = useSelector((state) => state.user);
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -27,15 +26,8 @@ export const LoginPage = () => {
     dispatch(login(user));
   }
 
-  if (user) {
-    return (
-      <Navigate to={'/'} />
-    );
-  }
-
   return (
-    <div className='mainContainer'>
-      <AppHeader />
+    <>
       <div className={styles.container}>
         <h2 className='text text_type_main-medium'>Вход</h2>
         { loginError
@@ -83,6 +75,6 @@ export const LoginPage = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 };

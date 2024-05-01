@@ -1,8 +1,7 @@
 import styles from './login.module.css';
-import AppHeader from '../components/app-header/app-header';
 import { Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { request } from '../utils/api';
 
 export const ResetPasswordPage = () => {
@@ -12,14 +11,21 @@ export const ResetPasswordPage = () => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const isPasswordReset = localStorage.getItem('isPasswordReset');
+    if (!isPasswordReset) {
+      navigate('/forgot-password', { replace: true });
+    }
+  }, [navigate]);
+
   const changeCheckCodeInput = (e) => {
     setCheckCode(e.target.value);
     setErrorMsg(null);
-  }
+  };
 
   const changePasswordInput = (e) => {
     setPassword(e.target.value);
-  }
+  };
 
   const resetPassword = (e) => {
     e.preventDefault();
@@ -32,6 +38,7 @@ export const ResetPasswordPage = () => {
     }).then((data) => {
       if (data.success) {
         setErrorMsg(null);
+        localStorage.removeItem('isPasswordReset');
         navigate('/', { replace: true });
       } else {
         setErrorMsg('Некорректно введён код из письма');
@@ -43,8 +50,7 @@ export const ResetPasswordPage = () => {
     });  
   };
   return (
-    <div className='mainContainer'>
-      <AppHeader />
+    <>
       <div className={styles.container}>
         <h2 className='text text_type_main-medium'>Восстановление пароля</h2>
         { errorMsg
@@ -87,6 +93,6 @@ export const ResetPasswordPage = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </>
   );
 };

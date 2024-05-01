@@ -1,5 +1,4 @@
 import styles from './profile.module.css';
-import AppHeader from '../components/app-header/app-header';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { logout } from '../services/user-slice';
 import { useDispatch } from 'react-redux';
@@ -24,8 +23,7 @@ export const ProfilePage = () => {
   ) : null;
 
   return (
-    <div className='mainContainer'>
-      <AppHeader />
+    <>
       <div className={styles.profileContainer}>
         <section className={`${styles.menuContainer} mr-15 ml-5`}>
           <nav className={`${styles.menu} mb-20 mt-8`}>
@@ -65,6 +63,6 @@ export const ProfilePage = () => {
         <Outlet />
 
       </div>
-    </div>
+    </>
   );
 };
