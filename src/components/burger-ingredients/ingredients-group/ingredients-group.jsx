@@ -17,7 +17,9 @@ const IngredientsGroup = ({name, type}) => {
       <ul className={styles.groupList}>
         {
           groupedIngredients.map((ingredient) => ( 
-            <IngredientCard key={ingredient._id} data={ingredient}/>
+            <li key={ingredient._id}>
+              <IngredientCard data={ingredient}/>
+            </li>
           ))
         } 
       </ul>
