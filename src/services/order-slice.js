@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { request } from '../utils/api';
+import { fetchWithRefresh } from '../utils/api';
 
 const initialState = {
   orderId: null,
@@ -22,7 +22,7 @@ export const orderSlice = createSlice({
     },
     createOrderFailure: (state, action) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
     hideOrder: (state) => {
       state.orderId = null;
@@ -41,10 +41,11 @@ export const orderSlice = createSlice({
 
 export const createOrder = (orderData) => (dispatch) => {
   dispatch(createOrderRequest());
-  request('/orders', {
+  fetchWithRefresh('/orders', {
     method: "POST",
     body: JSON.stringify({ingredients: orderData}),
     headers: {
+        "authorization": localStorage.getItem('accessToken'),
         "Content-Type": "application/json; charset=UTF-8"
     },
   }).then((response) => dispatch(createOrderSuccess(response)))
