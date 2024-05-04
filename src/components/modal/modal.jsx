@@ -16,7 +16,7 @@ const Modal = ({ onClose, children }) => {
     }
     window.addEventListener('keydown', close);
     return () => window.removeEventListener('keydown', close);
-  }, []);
+  }, [onClose]);
 
   return ReactDOM.createPortal(
     (<>
