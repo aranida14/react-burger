@@ -7,7 +7,8 @@ import {
   ResetPasswordPage,
   ProfilePage,
   ProfileDataPage,
-  OrdersHistoryPage
+  OrdersHistoryPage,
+  NotFound404Page,
 } from '../../pages';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -50,8 +51,7 @@ const App = () => {
           <Route path="" element={<OnlyAuth component={<ProfileDataPage />} />} />
           <Route path="orders" element={<OnlyAuth component={<OrdersHistoryPage />} />} />
         </Route>
-        {/* TODO */}
-        {/* <Route path="*" element={<NotFound404 />} /> */}
+        <Route path="*" element={<NotFound404Page />} />
       </Routes>
 
       {background && (

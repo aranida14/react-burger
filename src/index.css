@@ -5,8 +5,14 @@
 }
 
 body {
-  background: #131316;
-  color: white;
+  --color-background: #131316;
+  --color-text: #FFFFFF;
+  --header-height: 90px;
+  
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+
 }
 
 .mainContainer {

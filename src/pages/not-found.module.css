@@ -1,0 +1,21 @@
+.container {
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - 40px * 2 - var(--header-height));
+}
+
+.content {
+  margin: auto;
+}
+
+.link {
+  color: inherit;
+  opacity: 1;
+  font-weight: bold;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
