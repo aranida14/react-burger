@@ -50,7 +50,7 @@ const IngredientCard = ({ data }) => {
 }
 
 IngredientCard.propTypes = {
-  data: ingredientPropTypes
+  data: ingredientPropTypes.isRequired,
 };
 
 export default IngredientCard;
