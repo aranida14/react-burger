@@ -1,4 +1,5 @@
 import styles from './constructor-element-container.module.css';
+import PropTypes from 'prop-types';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientPropTypes } from '../../utils/types';
 import { useDrag, useDrop } from 'react-dnd';
@@ -61,7 +62,8 @@ const ConstructorElementContainer = ({ ingredient, index }) => {
 }
 
 ConstructorElementContainer.propTypes = {
-  ingredient: ingredientPropTypes
+  ingredient: ingredientPropTypes.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 

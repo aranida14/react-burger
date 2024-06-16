@@ -11,12 +11,6 @@
   width: 720px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .closeBtn {
   background: inherit;
   border: none;
@@ -25,4 +19,8 @@
   align-items: flex-end;
 
   cursor: pointer;
+
+  position: absolute;
+  top: 56px;
+  right: 40px;
 }

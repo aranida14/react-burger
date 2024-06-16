@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.title {
+  align-self: flex-start;
+}
+
 .nutritionalValue {
   display: flex;
   flex-direction: row;

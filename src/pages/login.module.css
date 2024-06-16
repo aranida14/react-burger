@@ -1,0 +1,30 @@
+.container {
+  max-width: 480px;
+
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.linkContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  max-height: 24px;
+}
+
+.linkContainer > p {
+  margin-right: -32px;
+}
+
+.routeButton {
+  margin-right: -32px;
+}
+
+.error {
+  color: red;
+}

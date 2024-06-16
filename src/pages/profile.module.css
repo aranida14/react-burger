@@ -1,0 +1,53 @@
+.profileContainer {
+  width: 1280px;
+  margin-top: 120px;
+
+  display: flex;
+  justify-content: flex-start;
+}
+
+.menuContainer {
+  max-width: 320px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:  flex-start;
+
+  gap: 32px;
+}
+
+.link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+
+  background: inherit;
+  border: none;
+  padding: 0;
+
+  opacity: 1;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.formContainer > form {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  text-align: start;
+}
+
+.buttons {
+  align-self: flex-end;
+}
+
+.error {
+  color: red;
+}

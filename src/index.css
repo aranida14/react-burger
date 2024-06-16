@@ -5,6 +5,22 @@
 }
 
 body {
-  background: #131316;
-  color: white;
+  --color-background: #131316;
+  --color-text: #FFFFFF;
+  --header-height: 90px;
+  
+  background-color: var(--color-background);
+  color: var(--color-text);
+
+
+}
+
+.mainContainer {
+  text-align: center;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
 }
