@@ -4,10 +4,10 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsGroup from './ingredients-group/ingredients-group'; 
 
 const BurgerIngredients = () => {
-  const [currentTab, setCurrentTab] = useState('bun');
-  const groupsRef = useRef([]);
+  const [currentTab, setCurrentTab] = useState<string | undefined>('bun');
+  const groupsRef = useRef<HTMLLIElement[]>([]);
 
-  const refCallback = useCallback((element) => {
+  const refCallback = useCallback((element: HTMLLIElement) => {
     if (element) {
       groupsRef.current.push(element);
     }
@@ -17,7 +17,9 @@ const BurgerIngredients = () => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setCurrentTab(entry.target.dataset.type);
+          if (entry.target instanceof HTMLElement) {
+            setCurrentTab(entry.target.dataset.type);
+          }
         }
       });
     });
@@ -30,13 +32,13 @@ const BurgerIngredients = () => {
     <section className={ `${styles.section} mr-10` }>
       <h1 className={ `${styles.title} mt-10 text text_type_main-large` }>Соберите бургер</h1>
       <div className={ `${styles.tabs} mt-5` }>
-        <Tab value="bun" active={currentTab === 'bun'}>
+        <Tab value="bun" active={currentTab === 'bun'} onClick={() => {}}>
           Булки
         </Tab>
-        <Tab value="sauce" active={currentTab === 'sauce'}>
+        <Tab value="sauce" active={currentTab === 'sauce'} onClick={() => {}}>
           Соусы
         </Tab>
-        <Tab value="main" active={currentTab === 'main'}>
+        <Tab value="main" active={currentTab === 'main'} onClick={() => {}}>
           Начинки
         </Tab>
       </div>

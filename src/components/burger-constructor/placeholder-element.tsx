@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import styles from './placeholder-element.module.css';
 
-const PlaceholderElement = ({ type }) => {
+type TPlaceHolderProps = {
+  type: string;
+};
+
+const PlaceholderElement = ({ type }: TPlaceHolderProps) => {
   const [ placeHolderStyle, placeholderText ] =
     (type === 'top') ? [ styles.placeholderTop, 'Выберите булку' ]
     : (type === 'primary') ? [ styles.placeholderPrimary, 'Выберите начинку']
@@ -19,7 +22,3 @@ const PlaceholderElement = ({ type }) => {
 }
 
 export default PlaceholderElement;
-
-PlaceholderElement.propTypes = {
-  type: PropTypes.string.isRequired,
-}

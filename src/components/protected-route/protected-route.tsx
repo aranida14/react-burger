@@ -1,10 +1,17 @@
-import PropTypes from 'prop-types';
+import React from 'react';
 import { useSelector } from "react-redux";
 import { Navigate, useLocation } from "react-router-dom";
 import Loader from "../loader/loader";
 
-const Protected = ({ onlyUnAuth = false, component }) => {
+type TProtectedProps = {
+  onlyUnAuth?: boolean;
+  component: React.JSX.Element;
+}
+
+const Protected = ({ onlyUnAuth = false, component }: TProtectedProps) => {
+  // @ts-ignore
   const isAuthChecked = useSelector((store) => store.user.isAuthChecked);
+  // @ts-ignore
   const user = useSelector((store) => store.user.user);
   const location = useLocation();
 
@@ -25,14 +32,6 @@ const Protected = ({ onlyUnAuth = false, component }) => {
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ component }) => (
+export const OnlyUnAuth = ({ component }: TProtectedProps) => (
   <Protected onlyUnAuth={true} component={component} />
 );
-
-OnlyAuth.propTypes = {
-  component: PropTypes.element.isRequired,
-}
-
-OnlyUnAuth.propTypes = {
-  component: PropTypes.element.isRequired,
-}

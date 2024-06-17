@@ -3,6 +3,7 @@ import doneImagePath from '../../images/done.svg';
 import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
+  // @ts-ignore
   const orderId = useSelector((state) => state.order.orderId);
   return (
     <div className={`${styles.order} mt-20`}>

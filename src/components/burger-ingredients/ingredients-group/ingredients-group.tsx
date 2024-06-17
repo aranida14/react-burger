@@ -1,13 +1,19 @@
 import React from 'react';
 import styles from './ingredients-group.module.css';
-import PropTypes from 'prop-types';
 import IngredientCard from '../ingredient-card/ingredient-card';
 import { useSelector } from 'react-redux';
+import { TIngredient } from '../../../utils/types';
 
-const IngredientsGroup = ({name, type}) => {
+type TIngredientGroupProps = {
+  name: string;
+  type: string;
+};
+
+const IngredientsGroup = ({name, type}: TIngredientGroupProps) => {
+  // @ts-ignore
   const ingredients = useSelector((state) => state.ingredients.data);
-  const groupedIngredients = React.useMemo(
-    () => ingredients.filter((item) => item.type === type),
+  const groupedIngredients = React.useMemo<TIngredient[]>(
+    () => ingredients.filter((item: TIngredient) => item.type === type),
     [ingredients]
   );
   
@@ -16,7 +22,7 @@ const IngredientsGroup = ({name, type}) => {
       <h2 className={ `${styles.groupTitle } text text_type_main-medium mb-6` }>{name}</h2>
       <ul className={styles.groupList}>
         {
-          groupedIngredients.map((ingredient) => ( 
+          groupedIngredients.map((ingredient: TIngredient) => ( 
             <li key={ingredient._id}>
               <IngredientCard data={ingredient}/>
             </li>
@@ -26,10 +32,5 @@ const IngredientsGroup = ({name, type}) => {
     </>
   )
 }
-
-IngredientsGroup.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-};
 
 export default IngredientsGroup;
