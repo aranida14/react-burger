@@ -7,6 +7,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import Loader from '../components/loader/loader';
 
 export const HomePage = () => {
+  // @ts-ignore
   const { data, isLoading, error } = useSelector((state) => state.ingredients);
 
   if (isLoading) {

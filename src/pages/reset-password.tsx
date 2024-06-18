@@ -1,13 +1,13 @@
 import styles from './login.module.css';
 import { Button, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { request } from '../utils/api';
 
 export const ResetPasswordPage = () => {
   const [password, setPassword] = useState('');
   const [checkCode, setCheckCode] = useState('');
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const navigate = useNavigate();
 
@@ -18,16 +18,16 @@ export const ResetPasswordPage = () => {
     }
   }, [navigate]);
 
-  const changeCheckCodeInput = (e) => {
+  const changeCheckCodeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckCode(e.target.value);
     setErrorMsg(null);
   };
 
-  const changePasswordInput = (e) => {
+  const changePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const resetPassword = (e) => {
+  const resetPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     request('/password-reset/reset', {
       method: "POST",

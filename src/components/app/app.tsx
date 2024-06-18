@@ -23,7 +23,9 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // @ts-ignore
     dispatch(getUser());
+    // @ts-ignore
     dispatch(fetchIngredients());
   }, []);
 
@@ -59,7 +61,7 @@ const App = () => {
             <Route
               path='/ingredients/:ingredientId'
               element={
-                <Modal onClose={handleModalClose} title={'Детали ингредиента'}>
+                <Modal onClose={handleModalClose}>
                   <IngredientDetails />
                 </Modal>
               }

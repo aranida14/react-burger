@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 
 const AppHeader = () => {
+  // @ts-ignore
   const { user } = useSelector((state) => state.user);
   const userName = user?.name;
   
@@ -24,7 +25,7 @@ const AppHeader = () => {
             </NavLink>
           </li>
           <li className={ `${styles.orders} m-5`}>
-            <Link>
+            <Link to="/">
               <ListIcon type="secondary" />
               <span className="text text_type_main-default text_color_inactive ml-2">Лента заказов</span>
             </Link>

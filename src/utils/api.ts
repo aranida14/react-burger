@@ -1,13 +1,15 @@
 import { BASE_URL } from "./constants";
 
-const checkResponse =  (response) => {
+type TError = { message: string; };
+
+const checkResponse =  (response: Response) => {
   if (response.ok) {
     return response.json();
   }
   return response.json().then((err) => Promise.reject(err));
 }
 
-export const request = (endpoint, options) => {
+export const request = (endpoint: string, options: RequestInit) => {
   const url = `${BASE_URL}${endpoint.startsWith('/') ? '': '/'}${endpoint}`;
   return fetch(url, options).then(checkResponse);
 }
@@ -24,10 +26,11 @@ export const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: RequestInit) => {
   try {
     return await request(url, options);
-  } catch (err) {
+  } catch (e) {
+    const err = e as TError;
     if (err.message === "jwt expired") {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
@@ -35,7 +38,7 @@ export const fetchWithRefresh = async (url, options) => {
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
-      options.headers.authorization = refreshData.accessToken;
+      (options.headers as { [key: string]: string }).authorization = refreshData.accessToken;
       return await request(url, options);
     } else {
       return Promise.reject(err);

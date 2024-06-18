@@ -2,8 +2,10 @@ import { useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 import Loader from '../loader/loader';
+import { TIngredient } from '../../utils/types';
 
 const IngredientDetails = () => {
+  // @ts-ignore
   const { data, isLoading, error } = useSelector((state) => state.ingredients);
   const { ingredientId } = useParams();
   
@@ -11,7 +13,7 @@ const IngredientDetails = () => {
     return <Loader />;
   }
 
-  const ingredient = data && data.length ? data.find((item) => item._id === ingredientId) : null;
+  const ingredient = data && data.length ? data.find((item: TIngredient) => item._id === ingredientId) : null;
 
   return (ingredient &&
     <div className={`${styles.modalContent} pt-2`}>

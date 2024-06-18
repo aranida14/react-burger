@@ -2,16 +2,16 @@ import styles from './login.module.css';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { request } from '../utils/api';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }
 
-  const resetPassword = (e) => {
+  const resetPassword = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     request('/password-reset', {
       method: "POST",
@@ -21,7 +21,7 @@ export const ForgotPasswordPage = () => {
       },
     }).then((data) => {
       if (data.success) {
-        localStorage.setItem('isPasswordReset', true);
+        localStorage.setItem('isPasswordReset', String(true));
         navigate('/reset-password');
       } else {
         console.error('Ошибка');

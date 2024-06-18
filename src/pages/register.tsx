@@ -1,7 +1,7 @@
 import styles from './login.module.css';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../services/user-slice';
 
@@ -11,23 +11,25 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+  // @ts-ignore
   const { registerUserError } = useSelector((state) => state.user);  
 
-  const changeName = (e) => {
+  const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
-  const changeEmail = (e) => {
+  const changeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const changePassword = (e) => {
+  const changePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = { email, password, name };
+    //@ts-ignore
     dispatch(registerUser(user));
   };
 

@@ -2,13 +2,15 @@ import styles from './profile.module.css';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import { logout } from '../services/user-slice';
 import { useDispatch } from 'react-redux';
+import React from 'react';
 
 export const ProfilePage = () => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    // @ts-ignore
     dispatch(logout());
   };
 

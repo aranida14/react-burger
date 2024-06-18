@@ -1,14 +1,19 @@
 import { useMemo } from 'react';
 import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientPropTypes } from '../../../utils/types';
+import { TIngredient } from '../../../utils/types';
 import { useSelector } from 'react-redux';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 
-const IngredientCard = ({ data }) => {
+type TCardProps = {
+  data: TIngredient;
+};
+
+const IngredientCard = ({ data }: TCardProps) => {
   const location = useLocation();
   const {_id, image, name, price} = data;
+  // @ts-ignore
   const { bun, ingredients: constructorIngredients } = useSelector((state) => state.burgerConstructor);
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -19,12 +24,12 @@ const IngredientCard = ({ data }) => {
     }),
   });
   
-  const count = useMemo(() => {
+  const count = useMemo<number>(() => {
     if (bun && bun._id === _id) {
       return 2;
     }
    return constructorIngredients
-    .reduce((acc, item) => item._id === _id ? acc + 1 : acc, 0);
+    .reduce((acc: number, item: TIngredient) => item._id === _id ? acc + 1 : acc, 0);
   }, [bun, constructorIngredients]);
 
   return (
@@ -48,9 +53,5 @@ const IngredientCard = ({ data }) => {
       </Link>
   )
 }
-
-IngredientCard.propTypes = {
-  data: ingredientPropTypes.isRequired,
-};
 
 export default IngredientCard;

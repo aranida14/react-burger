@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
@@ -12,20 +12,24 @@ import PlaceholderElement from './placeholder-element';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import Loader from '../loader/loader';
+import { TIngredient, TIngredientWithUuid } from '../../utils/types';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // @ts-ignore
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+  // @ts-ignore
   const { user } = useSelector((state) => state.user);
+  // @ts-ignore
   const { orderId, isLoading, error } = useSelector((state) => state.order);
 
   const [showOrder, setShowOrder] = useState(false);
 
   const [{ dragItem, canDrop }, dropRef] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop: (item: TIngredient) => {
       onDropHandler(item);
     },
     collect: (monitor) => ({
@@ -34,12 +38,12 @@ const BurgerConstructor = () => {
     }),
   });
 
-  const onDropHandler = (ingredient) => {
+  const onDropHandler = (ingredient: TIngredient) => {
     dispatch(addIngredient({ ...ingredient, uuid: uuidv4() }));
   };
 
-  const totalPrice = useMemo(() => {
-    let sum = ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0);
+  const totalPrice = useMemo<number>(() => {
+    let sum = ingredients.reduce((acc: number, ingredient: TIngredientWithUuid) => acc + ingredient.price, 0);
     if (bun) {
       sum += bun.price * 2;
     }
@@ -53,10 +57,11 @@ const BurgerConstructor = () => {
       } else {
         const orderData = [
           bun._id,
-          ...ingredients.map(({ _id }) => _id),
+          ...ingredients.map(({ _id }: TIngredientWithUuid) => _id),
           bun._id,
         ];
         setShowOrder(true);
+        // @ts-ignore
         dispatch(createOrder(orderData));
       }
     }
@@ -107,7 +112,7 @@ const BurgerConstructor = () => {
 
         {
           (ingredients && ingredients.length) ?
-          ingredients.map((ingredient, index) => (
+          ingredients.map((ingredient: TIngredientWithUuid, index: number) => (
             <li className={styles.constructorElement} key={ingredient.uuid}>
               <ConstructorElementContainer ingredient={ingredient} index={index} />
             </li>
