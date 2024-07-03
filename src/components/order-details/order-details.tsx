@@ -1,9 +1,8 @@
 import styles from './order-details.module.css';
 import doneImagePath from '../../images/done.svg';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 const OrderDetails = () => {
-  // @ts-ignore
   const orderId = useSelector((state) => state.order.orderId);
   return (
     <div className={`${styles.order} mt-20`}>

@@ -11,7 +11,7 @@ import {
   NotFound404Page,
 } from '../../pages';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { getUser } from '../../services/user-slice';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 import AppHeader from '../app-header/app-header';
@@ -23,9 +23,7 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // @ts-ignore
     dispatch(getUser());
-    // @ts-ignore
     dispatch(fetchIngredients());
   }, []);
 

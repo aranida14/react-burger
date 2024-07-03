@@ -1,11 +1,10 @@
 import { useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import Loader from '../loader/loader';
 import { TIngredient } from '../../utils/types';
 
 const IngredientDetails = () => {
-  // @ts-ignore
   const { data, isLoading, error } = useSelector((state) => state.ingredients);
   const { ingredientId } = useParams();
   
@@ -15,7 +14,7 @@ const IngredientDetails = () => {
 
   const ingredient = data && data.length ? data.find((item: TIngredient) => item._id === ingredientId) : null;
 
-  return (ingredient &&
+  return (ingredient ?
     <div className={`${styles.modalContent} pt-2`}>
       <div className={ `${styles.title} text text_type_main-large mt-10 ml-10 mr-10 mb-4`}>Детали ингредиента</div>
       <img src={ingredient.image_large} alt={ingredient.name} className='ml-4 mr-4 mb-4'/>
@@ -39,7 +38,7 @@ const IngredientDetails = () => {
         </div>
       </div>
     </div>
-  );
+  : <div/>);
 };
 
 export default IngredientDetails;

@@ -9,7 +9,7 @@ const checkResponse =  (response: Response) => {
   return response.json().then((err) => Promise.reject(err));
 }
 
-export const request = (endpoint: string, options: RequestInit) => {
+export const request = (endpoint: string, options?: RequestInit) => {
   const url = `${BASE_URL}${endpoint.startsWith('/') ? '': '/'}${endpoint}`;
   return fetch(url, options).then(checkResponse);
 }
@@ -26,7 +26,7 @@ export const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url: string, options: RequestInit) => {
+export const fetchWithRefresh = async (url: string, options?: RequestInit) => {
   try {
     return await request(url, options);
   } catch (e) {
@@ -38,7 +38,9 @@ export const fetchWithRefresh = async (url: string, options: RequestInit) => {
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
-      (options.headers as { [key: string]: string }).authorization = refreshData.accessToken;
+      if (options && options.headers) {
+        (options.headers as { [key: string]: string }).authorization = refreshData.accessToken; 
+      }      
       return await request(url, options);
     } else {
       return Promise.reject(err);

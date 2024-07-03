@@ -2,7 +2,7 @@ import styles from './login.module.css';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { registerUser } from '../services/user-slice';
 
 export const RegisterPage = () => {
@@ -11,7 +11,6 @@ export const RegisterPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
-  // @ts-ignore
   const { registerUserError } = useSelector((state) => state.user);  
 
   const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +28,6 @@ export const RegisterPage = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = { email, password, name };
-    //@ts-ignore
     dispatch(registerUser(user));
   };
 

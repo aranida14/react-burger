@@ -1,10 +1,9 @@
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import { Link, NavLink } from 'react-router-dom';
 
 const AppHeader = () => {
-  // @ts-ignore
   const { user } = useSelector((state) => state.user);
   const userName = user?.name;
   

@@ -1,7 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { request } from '../utils/api';
+import { TIngredient } from '../utils/types';
+import { AppDispatch } from './store';
 
-const initialState = {
+type TIngredientsState = {
+  data: TIngredient[];
+  isLoading: boolean;
+  error: null | Error;
+}
+
+const initialState: TIngredientsState = {
   data: [],
   isLoading: false,
   error: null,
@@ -15,18 +23,18 @@ export const ingredientsSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    fetchIngredientsSuccess: (state, action) => {
+    fetchIngredientsSuccess: (state, action: PayloadAction<TIngredient[]>) => {
       state.isLoading = false;
       state.data = action.payload;
     },
-    fetchIngredientsFailure: (state, action) => {
+    fetchIngredientsFailure: (state, action: PayloadAction<Error>) => {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
 
-export const fetchIngredients = () => (dispatch) => {
+export const fetchIngredients = () => (dispatch: AppDispatch) => {
   dispatch(fetchIngredientsRequest());
   request('/ingredients')
     .then((response) => dispatch(fetchIngredientsSuccess(response.data)))

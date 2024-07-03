@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { createOrder, hideOrder } from '../../services/order-slice';
 import { addIngredient, clearConstructor } from '../../services/burger-constructor-slice';
 import { useDrop } from 'react-dnd';
@@ -18,11 +18,8 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // @ts-ignore
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
-  // @ts-ignore
   const { user } = useSelector((state) => state.user);
-  // @ts-ignore
   const { orderId, isLoading, error } = useSelector((state) => state.order);
 
   const [showOrder, setShowOrder] = useState(false);
@@ -61,7 +58,6 @@ const BurgerConstructor = () => {
           bun._id,
         ];
         setShowOrder(true);
-        // @ts-ignore
         dispatch(createOrder(orderData));
       }
     }

@@ -1,7 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchWithRefresh } from '../utils/api';
+import { AppDispatch } from './store';
 
-const initialState = {
+type TOrderState = {
+  orderId: null | string;
+  isLoading: boolean;
+  error: null | string;
+}
+
+const initialState: TOrderState = {
   orderId: null,
   isLoading: false,
   error: null,
@@ -16,9 +23,9 @@ export const orderSlice = createSlice({
       state.isLoading = true;
       state.error = null;
     },
-    createOrderSuccess: (state, action) => {
+    createOrderSuccess: (state, action: PayloadAction<string>) => {
       state.isLoading = false;
-      state.orderId = action.payload.order.number;
+      state.orderId = action.payload;
     },
     createOrderFailure: (state, action) => {
       state.isLoading = false;
@@ -39,16 +46,16 @@ export const orderSlice = createSlice({
 //   }
 // }
 
-export const createOrder = (orderData) => (dispatch) => {
+export const createOrder = (orderData: string[]) => (dispatch: AppDispatch) => {
   dispatch(createOrderRequest());
   fetchWithRefresh('/orders', {
     method: "POST",
     body: JSON.stringify({ingredients: orderData}),
     headers: {
-        "authorization": localStorage.getItem('accessToken'),
+        "authorization": localStorage.getItem('accessToken') ?? '',
         "Content-Type": "application/json; charset=UTF-8"
     },
-  }).then((response) => dispatch(createOrderSuccess(response)))
+  }).then((response) => dispatch(createOrderSuccess(response.order.number)))
   .catch((e) => dispatch(createOrderFailure(e)));
 }
 
