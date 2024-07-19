@@ -1,0 +1,63 @@
+.mainContainer {
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+}
+
+.orderFeed {
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  flex-basis: 600px;
+}
+
+.ordersStats {
+  flex-basis: 600px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  overflow: auto;
+}
+
+.ordersStatuses {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-start;
+
+  gap: 36px;
+}
+
+.statusesColumn {
+  /* width: 300px; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.numbersList {
+  list-style-type: none;
+  padding-left: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  max-height: 155px;
+}
+
+.ready {
+  color: var(--colors-interface-success);
+}
+
+.totalAmount {
+  text-shadow: 4px 4px 32px #3333FF;
+}

@@ -9,6 +9,7 @@ import {
   ProfileDataPage,
   OrdersHistoryPage,
   NotFound404Page,
+  FeedPage,
 } from '../../pages';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/hooks';
@@ -18,6 +19,7 @@ import AppHeader from '../app-header/app-header';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
 import { fetchIngredients } from '../../services/ingredients-slice';
+import OrderInfo from '../order-info/order-info';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,6 +53,8 @@ const App = () => {
           <Route path="" element={<OnlyAuth component={<ProfileDataPage />} />} />
           <Route path="orders" element={<OnlyAuth component={<OrdersHistoryPage />} />} />
         </Route>
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:number" element={<OrderInfo />} />
         <Route path="*" element={<NotFound404Page />} />
       </Routes>
 

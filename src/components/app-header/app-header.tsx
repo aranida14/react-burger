@@ -24,10 +24,16 @@ const AppHeader = () => {
             </NavLink>
           </li>
           <li className={ `${styles.orders} m-5`}>
-            <Link to="/">
-              <ListIcon type="secondary" />
-              <span className="text text_type_main-default text_color_inactive ml-2">Лента заказов</span>
-            </Link>
+            <NavLink to="/feed">
+              {({isActive}) => (
+                <>
+                  <ListIcon type={isActive ? "primary" : "secondary"} />
+                  <span className={`text text_type_main-default ml-2 ${isActive ? '' : 'text_color_inactive'}`}>
+                    Лента заказов
+                  </span>
+                </>                
+              )}
+            </NavLink>
           </li>
           <li className={ `${styles.logo} mr-9` }>
             <Link to="/">
@@ -41,7 +47,6 @@ const AppHeader = () => {
                 <>
                   <ProfileIcon type={isActive ? "primary" : "secondary"} />
                   <span className={`text text_type_main-default ml-2 ${isActive ? '' : 'text_color_inactive'}`}>
-                    {/* Личный кабинет */}
                     {userName ? userName : 'Личный кабинет'}
                   </span>
                 </>
