@@ -16,3 +16,7 @@ export type TIngredient = {
 export type TIngredientWithUuid = TIngredient & {
   uuid: string;
 };
+
+export type TOrderIngredient = TIngredient & {
+  count: number
+};

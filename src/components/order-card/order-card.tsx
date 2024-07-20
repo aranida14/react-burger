@@ -5,6 +5,8 @@ import { TOrderCard } from "../../utils/data";
 import { useSelector } from "../../services/hooks";
 import { TIngredient } from "../../utils/types";
 import { useLocation } from "react-router";
+import { Link } from "react-router-dom";
+import { TOrderIngredient } from "../../utils/types";
 
 type TOrderCardProps = {
   order: TOrderCard;
@@ -13,16 +15,25 @@ type TOrderCardProps = {
 const OrderCard = ({ order }: TOrderCardProps) => {
   const location = useLocation();
   const ingredients = useSelector((state) => state.ingredients.data);
-  const orderIngredients = useMemo<TIngredient[]>(
-    () => order.ingredients.map((id: string | null) => ingredients
+
+  const orderIngredients = useMemo<TOrderIngredient[]>(
+    () => (order.ingredients.map((id: string | null) => ingredients
       .find((ingredient) => ingredient._id === id))
-      .filter((item) => item !== undefined) as TIngredient[],
+      .filter((item) => item !== undefined) as TIngredient[])
+      .reduce<TOrderIngredient[]>((groupedIngredients: TOrderIngredient[], item: TIngredient) => {
+        const addedElement = groupedIngredients.find((el) => el._id === item._id);
+        if (addedElement) {
+          addedElement.count += 1;
+          return groupedIngredients;
+        }
+        return [...groupedIngredients, { ...item, count: 1 }];
+      }, []),
     [ingredients, order]
   );
-  const numberFormatted = `#${String(order.number).padStart(6, '0')}`;
+  // const numberFormatted = `#${String(order.number).padStart(6, '0')}`;
   const maxIngredientsShown = 6;
   const orderPrice = useMemo<number>(() => {
-    let sum = orderIngredients.reduce((acc: number, ingredient: TIngredient) => acc + (ingredient.price), 0);
+    let sum = orderIngredients.reduce((acc: number, ingredient: TOrderIngredient) => acc + (ingredient.price * ingredient.count), 0);
     return sum;
   }, [orderIngredients]);
 
@@ -32,9 +43,14 @@ const OrderCard = ({ order }: TOrderCardProps) => {
     return null;
   }
   return (
+    <Link
+        to={`/feed/${order._id}`}
+        // state={{ background: location }}
+        className={styles.link}
+      >
     <div className={`${styles.container}`}>
       <div className={styles.top}>
-        <span className="text text_type_digits-default">{numberFormatted}</span>
+        <span className="text text_type_digits-default">{`#${order.number}`}</span>
         <FormattedDate date={new Date(order.createdAt)} className="text text_type_main-default text_color_inactive" />
       </div>
       <div className={styles.middle}>
@@ -74,9 +90,10 @@ const OrderCard = ({ order }: TOrderCardProps) => {
         <div className={ `${styles.priceContainer} mt-4 mb-1`}>
             <span className={ `text text_type_digits-default ${styles.price}`}>{orderPrice}</span>
             <CurrencyIcon type="primary" />
-          </div>
+        </div>
       </div>
     </div>
+    </Link>
   );
 }
 

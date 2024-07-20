@@ -54,7 +54,7 @@ const App = () => {
           <Route path="orders" element={<OnlyAuth component={<OrdersHistoryPage />} />} />
         </Route>
         <Route path="/feed" element={<FeedPage />} />
-        <Route path="/feed/:number" element={<OrderInfo />} />
+        <Route path="/feed/:orderId" element={<OrderInfo />} />
         <Route path="*" element={<NotFound404Page />} />
       </Routes>
 
