@@ -45,6 +45,8 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path='/ingredients/:ingredientId'
                element={<IngredientDetails />} />
+        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed/:orderId" element={<OrderInfo />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
         <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
@@ -53,8 +55,7 @@ const App = () => {
           <Route path="" element={<OnlyAuth component={<ProfileDataPage />} />} />
           <Route path="orders" element={<OnlyAuth component={<OrdersHistoryPage />} />} />
         </Route>
-        <Route path="/feed" element={<FeedPage />} />
-        <Route path="/feed/:orderId" element={<OrderInfo />} />
+        <Route path="/profile/orders/:orderId" element={<OnlyAuth component={<OrderInfo />} />} />
         <Route path="*" element={<NotFound404Page />} />
       </Routes>
 

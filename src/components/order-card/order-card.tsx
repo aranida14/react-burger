@@ -5,7 +5,6 @@ import { TOrderCard } from "../../utils/data";
 import { useSelector } from "../../services/hooks";
 import { TIngredient } from "../../utils/types";
 import { useLocation } from "react-router";
-import { Link } from "react-router-dom";
 import { TOrderIngredient } from "../../utils/types";
 
 type TOrderCardProps = {
@@ -43,11 +42,7 @@ const OrderCard = ({ order }: TOrderCardProps) => {
     return null;
   }
   return (
-    <Link
-        to={`/feed/${order._id}`}
-        // state={{ background: location }}
-        className={styles.link}
-      >
+
     <div className={`${styles.container}`}>
       <div className={styles.top}>
         <span className="text text_type_digits-default">{`#${order.number}`}</span>
@@ -93,7 +88,7 @@ const OrderCard = ({ order }: TOrderCardProps) => {
         </div>
       </div>
     </div>
-    </Link>
+
   );
 }
 
