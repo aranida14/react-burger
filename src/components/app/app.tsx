@@ -69,6 +69,22 @@ const App = () => {
                 </Modal>
               }
             />
+            <Route
+              path='/feed/:orderId'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+            <Route
+              path='/profile/orders/:orderId'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
         </Routes>
       )}
     </div>

@@ -10,9 +10,14 @@
   margin: auto;
 }
 
-.orderNumber {
+/* .orderNumber {
+  align-self: center;
+} */
+
+.center {
   align-self: center;
 }
+
 .orderName {
   text-align: left;
 }

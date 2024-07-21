@@ -15,8 +15,8 @@ const IngredientDetails = () => {
   const ingredient = data && data.length ? data.find((item: TIngredient) => item._id === ingredientId) : null;
 
   return (ingredient ?
-    <div className={`${styles.modalContent} pt-2`}>
-      <div className={ `${styles.title} text text_type_main-large mt-10 ml-10 mr-10 mb-4`}>Детали ингредиента</div>
+    <div className={`${styles.modalContent}`}>
+      <div className={ `${styles.title} text text_type_main-large ml-10 mr-10 mb-4`}>Детали ингредиента</div>
       <img src={ingredient.image_large} alt={ingredient.name} className='ml-4 mr-4 mb-4'/>
       <div className={ `${styles.ingredientTitle} text text_type_main-medium mb-8` }>{ingredient.name}</div>
       <div className={ `${styles.nutritionalValue} text text_type_main-default text_color_inactive mb-15` }>

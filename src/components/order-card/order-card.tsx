@@ -70,7 +70,7 @@ const OrderCard = ({ order }: TOrderCardProps) => {
                   </div>
                 </div>
                 {index === maxIngredientsShown - 1 && ingredientsArray.length > maxIngredientsShown
-                && <div className={styles.extraCounter} style={{zIndex: 1000, position: 'relative', left: '-40px'}}>
+                && <div className={styles.extraCounter} style={{zIndex: 100, position: 'relative', left: '-40px'}}>
                   {/* `calc(${-index} * 1px - 40px)` */}
                       <span className="text text_type_main-default">
                         {`+${ingredientsArray.length - index}`}

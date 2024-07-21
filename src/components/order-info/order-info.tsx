@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { ordersData } from '../../utils/data';
 import { useSelector } from '../../services/hooks';
 import { useMemo } from 'react';
@@ -8,6 +8,9 @@ import styles from './order-info.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const OrderInfo = (): React.JSX.Element => {
+  const location = useLocation();
+  const background = location.state && location.state.background;
+
   const { orderId }  = useParams();
   const order = ordersData.orders.find((orderItem) => orderItem._id === orderId);
   const { data: ingredients, isLoading } = useSelector((state) => state.ingredients);
@@ -42,8 +45,10 @@ const OrderInfo = (): React.JSX.Element => {
     return <div/>;
   }
   return (
-    <div className={`${styles.container}`}>
-      <div className={`text text_type_digits-default mt-4 ${styles.orderNumber}`}>{`#${order.number}`}</div>
+    <div className={`${styles.container} pt-2`}>
+      <div
+        className={`text text_type_digits-default ${styles.orderNumber} ${!background ? styles.center : ''}`}
+        >{`#${order.number}`}</div>
       <div className={`text text_type_main-medium mt-10 ${styles.orderName}`}>{order.name}</div>
       <div className={`mt-3 ${order.status === 'done' ? styles.ready : ''} text text_type_main-default`}>{status}</div>
       <div className="text text_type_main-medium mt-15 mb-6">Состав:</div> 
@@ -66,7 +71,7 @@ const OrderInfo = (): React.JSX.Element => {
             </li>)
         })}
       </ul> 
-      <div className={`${styles.bottom} mt-10 mb-4`}>
+      <div className={`${styles.bottom} mt-10 mb-10`}>
         <FormattedDate date={new Date(order.createdAt)} className="text text_type_main-default text_color_inactive" />
         <div className={ `${styles.priceContainer}`}>
             <span className={ `text text_type_digits-default ${styles.price}`}>{orderPrice}</span>
