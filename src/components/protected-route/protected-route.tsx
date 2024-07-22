@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from '../../services/hooks';
+import { useSelector } from '../../services/hooks/hooks';
 import { Navigate, useLocation } from "react-router-dom";
 import Loader from "../loader/loader";
 

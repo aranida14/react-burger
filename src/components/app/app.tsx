@@ -12,13 +12,13 @@ import {
   OrderFeedPage,
 } from '../../pages';
 import { useEffect } from 'react';
-import { useDispatch } from '../../services/hooks';
-import { getUser } from '../../services/user-slice';
+import { useDispatch } from '../../services/hooks/hooks';
+import { getUser } from '../../services/slices/user-slice';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route';
 import AppHeader from '../app-header/app-header';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
-import { fetchIngredients } from '../../services/ingredients-slice';
+import { fetchIngredients } from '../../services/slices/ingredients-slice';
 import OrderInfo from '../order-info/order-info';
 
 const App = () => {

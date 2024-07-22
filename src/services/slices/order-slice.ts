@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchWithRefresh } from '../utils/api';
-import { AppDispatch } from './store';
+import { fetchWithRefresh } from '../../utils/api';
+import { AppDispatch } from '../store';
 
 type TOrderState = {
   orderId: null | string;

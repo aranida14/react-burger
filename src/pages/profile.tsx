@@ -1,7 +1,7 @@
 import styles from './profile.module.css';
 import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import { logout } from '../services/user-slice';
-import { useDispatch } from '../services/hooks';
+import { logout } from '../services/slices/user-slice';
+import { useDispatch } from '../services/hooks/hooks';
 import React from 'react';
 
 export const ProfilePage = () => {

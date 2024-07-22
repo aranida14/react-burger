@@ -1,8 +1,8 @@
 import styles from './profile.module.css';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from '../services/hooks';
-import { updateUser, updateUserResetError } from '../services/user-slice';
+import { useDispatch, useSelector } from '../services/hooks/hooks';
+import { updateUser, updateUserResetError } from '../services/slices/user-slice';
 
 export const ProfileDataPage = () => {
   const { user, updateUserError } = useSelector((state) => state.user);

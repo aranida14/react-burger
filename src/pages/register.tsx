@@ -2,8 +2,8 @@ import styles from './login.module.css';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from '../services/hooks';
-import { registerUser } from '../services/user-slice';
+import { useDispatch, useSelector } from '../services/hooks/hooks';
+import { registerUser } from '../services/slices/user-slice';
 
 export const RegisterPage = () => {
   const [name, setName] = useState('');

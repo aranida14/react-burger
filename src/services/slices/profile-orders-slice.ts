@@ -1,24 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TOrdersData, WebSocketStatus, TOrderCard} from "../utils/types";
+import { TOrdersData, WebSocketStatus, TOrderCard} from "../../utils/types";
 
-export type TOrderFeedState = {
+export type TProfileOrdersState = {
   status: WebSocketStatus;
   orders: TOrderCard[];
-  total: number;
-  totalToday: number;
   connectionError: string | null;
 };
 
-const initialState: TOrderFeedState = {
+const initialState: TProfileOrdersState = {
   status: WebSocketStatus.OFFLINE,
   orders: [],
-  total: 0,
-  totalToday: 0,
   connectionError: null,
 }
 
-export const orderFeedSlice = createSlice({
-  name: 'orderFeed',
+export const profileOrdersSlice = createSlice({
+  name: 'profileOrders',
   initialState,
   reducers: {
     wsConnecting: (state) => {
@@ -36,8 +32,6 @@ export const orderFeedSlice = createSlice({
     },
     wsMessage: (state, action: PayloadAction<TOrdersData>) => {
       state.orders = action.payload.orders;
-      state.total = action.payload.total;
-      state.totalToday = action.payload.totalToday;
     }
   },
 });
@@ -48,11 +42,11 @@ export const {
   wsClose,
   wsError,
   wsMessage
-} = orderFeedSlice.actions;
+} = profileOrdersSlice.actions;
 
 
-export default orderFeedSlice.reducer;
+export default profileOrdersSlice.reducer;
 
-type TActionCreators = typeof orderFeedSlice.actions;
+type TActionCreators = typeof profileOrdersSlice.actions;
 
-export type TFeedInternalActions = ReturnType<TActionCreators[keyof TActionCreators]>;
+export type TProfileOrdersActions = ReturnType<TActionCreators[keyof TActionCreators]>;

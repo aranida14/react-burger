@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TIngredient } from '../../../utils/types';
-import { useSelector } from '../../../services/hooks';
+import { useSelector } from '../../../services/hooks/hooks';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 

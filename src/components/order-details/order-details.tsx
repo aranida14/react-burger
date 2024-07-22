@@ -1,6 +1,6 @@
 import styles from './order-details.module.css';
 import doneImagePath from '../../images/done.svg';
-import { useSelector } from '../../services/hooks';
+import { useSelector } from '../../services/hooks/hooks';
 
 const OrderDetails = () => {
   const orderId = useSelector((state) => state.order.orderId);

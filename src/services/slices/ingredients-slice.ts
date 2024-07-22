@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { request } from '../utils/api';
-import { TIngredient } from '../utils/types';
-import { AppDispatch } from './store';
+import { request } from '../../utils/api';
+import { TIngredient } from '../../utils/types';
+import { AppDispatch } from '../store';
 
 type TIngredientsState = {
   data: TIngredient[];

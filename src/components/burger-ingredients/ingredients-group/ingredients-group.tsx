@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ingredients-group.module.css';
 import IngredientCard from '../ingredient-card/ingredient-card';
-import { useSelector } from '../../../services/hooks';
+import { useSelector } from '../../../services/hooks/hooks';
 import { TIngredient } from '../../../utils/types';
 
 type TIngredientGroupProps = {

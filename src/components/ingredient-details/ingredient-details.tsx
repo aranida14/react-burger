@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import styles from './ingredient-details.module.css';
-import { useSelector } from '../../services/hooks';
+import { useSelector } from '../../services/hooks/hooks';
 import Loader from '../loader/loader';
 import { TIngredient } from '../../utils/types';
 

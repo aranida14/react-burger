@@ -2,7 +2,7 @@ import { FormattedDate, CurrencyIcon } from "@ya.praktikum/react-developer-burge
 import styles from './order-card.module.css';
 import { useMemo } from "react";
 import { TOrderCard } from "../../utils/types";
-import { useSelector } from "../../services/hooks";
+import { useSelector } from "../../services/hooks/hooks";
 // import { TIngredient } from "../../utils/types";
 import { useLocation } from "react-router";
 import { TCountedIngredient } from "../../utils/types";
@@ -40,7 +40,7 @@ const OrderCard = ({ order }: TOrderCardProps) => {
       <div className={styles.middle}>
         <h2 className="text text_type_main-medium">{order.name}</h2>
         {location.pathname === '/profile/orders' &&
-          <span className="text text_type_main-default">{status}</span>}
+          <span className={`text text_type_main-default ${order.status === 'done' ? styles.ready : ''}`}>{status}</span>}
       </div>
       <div className={styles.bottom}>
         <ul className={`${styles.images}`}>

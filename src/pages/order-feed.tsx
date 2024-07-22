@@ -1,9 +1,9 @@
 import Loader from '../components/loader/loader';
 import OrderCardList from '../components/order-card-list/order-card-list';
 import styles from './order-feed.module.css';
-import { useDispatch, useSelector } from '../services/hooks';
+import { useDispatch, useSelector } from '../services/hooks/hooks';
 import { TOrderCard, WebSocketStatus } from '../utils/types';
-import { wsConnect, wsDisconnect } from '../services/order-feed-actions';
+import { wsConnect, wsDisconnect } from '../services/actions/order-feed-actions';
 import { MAX_ORDERS_STATS, ORDER_FEED_URL } from '../utils/constants';
 import { useEffect, useMemo } from 'react';
 
@@ -46,7 +46,7 @@ export const OrderFeedPage = () => {
               <h2 className="text text_type_main-medium pb-6">Готовы:</h2>
               <ul className={`${styles.numbersList} ${styles.ready}`}>
                 {ordersReady.map(({ number }) => (
-                  <li key={number} className={`text text_type_digits-default mr-2`}>{number}</li>
+                  <li key={number} className={`text text_type_digits-default mr-3`}>{number}</li>
                 ))}
               </ul>
             </div>
@@ -61,7 +61,7 @@ export const OrderFeedPage = () => {
           </div>
           <h2 className={`text text_type_main-medium mt-15`}>Выполнено за все время</h2>
           <div className={`${styles.totalAmount} text text_type_digits-large`}>{total}</div>
-          <h2 className={`text text_type_main-medium mt-15`}>Выполнено за сегодня</h2>
+          <h2 className={`text text_type_main-medium mt-10`}>Выполнено за сегодня</h2>
           <div className={`${styles.totalAmount} text text_type_digits-large`}>{totalToday}</div>
         </section>
       </main>

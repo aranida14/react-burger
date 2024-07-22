@@ -48,11 +48,11 @@
 
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   flex-wrap: wrap;
 
-  max-height: 155px;
-  /* max-height: 320px; */
+  /* max-height: 155px; */
+  max-height: 280px;
 }
 
 .ready {

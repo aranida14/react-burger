@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { fetchWithRefresh, request } from "../utils/api";
-import { AppDispatch } from "./store";
+import { fetchWithRefresh, request } from "../../utils/api";
+import { AppDispatch } from "../store";
 
 type TUser = {
   name: string;

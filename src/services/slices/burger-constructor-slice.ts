@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { TIngredientWithUuid } from '../utils/types';
+import { TIngredientWithUuid } from '../../utils/types';
 
 type TBurgerConstructorState = {
   bun: null | TIngredientWithUuid;
