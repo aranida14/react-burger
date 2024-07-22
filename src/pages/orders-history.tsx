@@ -32,7 +32,6 @@ export const OrdersHistoryPage = () => {
 
   return (
     <>
-      {/* <h2>Connection status: {status}</h2> */}
       <OrderCardList orders={sortedOrders} />
     </>
   );

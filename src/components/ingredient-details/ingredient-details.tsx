@@ -38,7 +38,7 @@ const IngredientDetails = () => {
         </div>
       </div>
     </div>
-  : <div/>);
+  : <Loader />);
 };
 
 export default IngredientDetails;

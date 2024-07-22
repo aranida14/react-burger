@@ -1,21 +1,36 @@
 import { useLocation, useParams } from 'react-router-dom';
-import { useSelector } from '../../services/hooks/hooks';
-import { useMemo } from 'react';
+import { useDispatch, useSelector } from '../../services/hooks/hooks';
+import { useEffect, useMemo } from 'react';
 import { TCountedIngredient } from '../../utils/types';
 import { getGroupedIngredients, getIngredientsByIds, getLocalizedOrderStatus, getOrderPrice } from "../../utils/utils";
 import Loader from '../loader/loader';
 import styles from './order-info.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { getOrderByNumber } from '../../services/slices/order-slice';
 
 const OrderInfo = (): React.JSX.Element => {
   const location = useLocation();
   const background = location.state && location.state.background;
+  const dispatch = useDispatch();
 
-  const { orderId }  = useParams();
-  const { orders } = useSelector((state) => (
-    location.pathname.startsWith('/feed') ? state.orderFeed
-    : state.profileOrders));
-  const order = orders.find((orderItem) => orderItem._id === orderId);
+  const { orderNumber }  = useParams();
+  const order = useSelector((state) => {
+    let anOrder = state.orderFeed.orders.find((o) => String(o.number) === orderNumber);
+    if (anOrder) {
+      return anOrder;
+    }
+    anOrder = state.profileOrders.orders.find((o) => String(o.number) === orderNumber);
+    if (anOrder) {
+      return anOrder;
+    }
+    return state.order.currentOrder;
+  });
+
+  useEffect(() => {
+    if (!order && orderNumber) {
+      dispatch(getOrderByNumber(orderNumber));
+    }
+  }, []);
   const ingredients = useSelector((state) => state.ingredients.data);
 
   const orderIngredients = useMemo<TCountedIngredient[] | null>(
@@ -29,7 +44,7 @@ const OrderInfo = (): React.JSX.Element => {
   const status = order ? getLocalizedOrderStatus(order.status) : '';
 
   if (!order) {
-    return <div/>;
+    return <Loader />;
   }
   return (
     <div className={`${styles.container} pt-2`}>

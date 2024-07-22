@@ -1,17 +1,22 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchWithRefresh } from '../../utils/api';
+import { fetchWithRefresh, request } from '../../utils/api';
 import { AppDispatch } from '../store';
+import { TOrderCard } from '../../utils/types';
 
 type TOrderState = {
   orderId: null | string;
   isLoading: boolean;
   error: null | string;
+  currentOrder: TOrderCard | null;
+  // isLoadingCurrentOrder: boolean;
 }
 
 const initialState: TOrderState = {
   orderId: null,
   isLoading: false,
   error: null,
+  currentOrder: null,
+  // isLoadingCurrentOrder: false
 }
 
 
@@ -33,6 +38,17 @@ export const orderSlice = createSlice({
     },
     hideOrder: (state) => {
       state.orderId = null;
+    },
+    getOrderRequest: (state) => {
+      // state.isLoadingCurrentOrder = true;
+      state.currentOrder = null;
+    },
+    getOrderSuccess: (state, action: PayloadAction<TOrderCard>) => {
+      state.currentOrder = action.payload;
+    },
+    getOrderFailure: (state) => {
+      state.currentOrder = null;
+      // state.isLoadingCurrentOrder = false;
     }
   },
 });
@@ -59,11 +75,28 @@ export const createOrder = (orderData: string[]) => (dispatch: AppDispatch) => {
   .catch((e) => dispatch(createOrderFailure(e)));
 }
 
+export const getOrderByNumber = (orderNumber: string) => (dispatch: AppDispatch) => {
+  dispatch(getOrderRequest());
+  
+  request(`/orders/${orderNumber}`)
+    .then((response) => {
+      // console.log()
+      if (response && response.orders && response.orders.length) {
+        return dispatch(getOrderSuccess(response.orders[0]));
+      }
+      return dispatch(getOrderFailure());
+    })
+    .catch(() => dispatch(getOrderFailure()));
+}
+
 export const {
   createOrderFailure,
   createOrderRequest,
   createOrderSuccess,
   hideOrder,
+  getOrderSuccess,
+  getOrderFailure,
+  getOrderRequest,
 } = orderSlice.actions;
 
 export default orderSlice.reducer;

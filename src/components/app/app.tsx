@@ -46,7 +46,7 @@ const App = () => {
         <Route path='/ingredients/:ingredientId'
                element={<IngredientDetails />} />
         <Route path="/feed" element={<OrderFeedPage />} />
-        <Route path="/feed/:orderId" element={<OrderInfo />} />
+        <Route path="/feed/:orderNumber" element={<OrderInfo />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
         <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
@@ -55,7 +55,7 @@ const App = () => {
           <Route path="" element={<OnlyAuth component={<ProfileDataPage />} />} />
           <Route path="orders" element={<OnlyAuth component={<OrdersHistoryPage />} />} />
         </Route>
-        <Route path="/profile/orders/:orderId" element={<OnlyAuth component={<OrderInfo />} />} />
+        <Route path="/profile/orders/:orderNumber" element={<OnlyAuth component={<OrderInfo />} />} />
         <Route path="*" element={<NotFound404Page />} />
       </Routes>
 
@@ -70,7 +70,7 @@ const App = () => {
               }
             />
             <Route
-              path='/feed/:orderId'
+              path='/feed/:orderNumber'
               element={
                 <Modal onClose={handleModalClose}>
                   <OrderInfo />
@@ -78,7 +78,7 @@ const App = () => {
               }
             />
             <Route
-              path='/profile/orders/:orderId'
+              path='/profile/orders/:orderNumber'
               element={
                 <Modal onClose={handleModalClose}>
                   <OrderInfo />

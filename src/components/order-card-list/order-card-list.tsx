@@ -16,7 +16,7 @@ const OrderCardList = ({ orders }: TOrderCardListProps) => {
         orders.map((order) => (
           <li key={order._id} className="mb-4">
             <Link
-              to={location.pathname === '/feed' ? `/feed/${order._id}` : `/profile/orders/${order._id}`}
+              to={location.pathname === '/feed' ? `/feed/${order.number}` : `/profile/orders/${order.number}`}
               state={{ background: location }}
               className={styles.link}
             >
