@@ -48,3 +48,7 @@ export const {
 } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
+
+type TActionCreators = typeof ingredientsSlice.actions;
+
+export type TIngredientsActions = ReturnType<TActionCreators[keyof TActionCreators]>;

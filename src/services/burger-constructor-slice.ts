@@ -50,3 +50,7 @@ export const {
 } = burgerConstructorSlice.actions;
 
 export default burgerConstructorSlice.reducer;
+
+type TActionCreators = typeof burgerConstructorSlice.actions;
+
+export type TBurgerConstructorActions = ReturnType<TActionCreators[keyof TActionCreators]>;

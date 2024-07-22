@@ -167,3 +167,7 @@ export const {
 } = userSlice.actions;
 
 export default userSlice.reducer;
+
+type TActionCreators = typeof userSlice.actions;
+
+export type TUserActions = ReturnType<TActionCreators[keyof TActionCreators]>;

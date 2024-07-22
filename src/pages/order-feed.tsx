@@ -17,7 +17,7 @@ export const OrderFeedPage = () => {
     return () => {
       dispatch(wsDisconnect());
     };
-  }, [dispatch]);
+  }, []);
 
   const ordersReady = useMemo<TOrderCard[]>(
     () => orders.filter(({ status }) => status === 'done')
@@ -37,6 +37,7 @@ export const OrderFeedPage = () => {
       <main className={styles.mainContainer}>
         <section className={`${styles.orderFeed} mr-15`}>
           <h2 className="text text_type_main-large pt-10 pb-5 pl-1">Лента заказов</h2>
+          {/* <h2>Connection status: {status}</h2> */}
           <OrderCardList orders={orders} />
         </section>
         <section className={`${styles.ordersStats} mt-25`}>

@@ -40,12 +40,6 @@ export const orderFeedSlice = createSlice({
       state.totalToday = action.payload.totalToday;
     }
   },
-  // selectors: {
-  //   getOrders: (state) => state.orders,
-  //   getTotal: (state) => state.total,
-  //   getTotalToday: (state) => state.totalToday,
-  //   getWebSocketStatus: (state) => state.status,
-  // }
 });
 
 export const {
@@ -56,11 +50,9 @@ export const {
   wsMessage
 } = orderFeedSlice.actions;
 
-// export const {
-//   getOrders,
-//   getTotal,
-//   getTotalToday,
-//   getWebSocketStatus
-// } = orderFeedSlice.selectors;
 
 export default orderFeedSlice.reducer;
+
+type TActionCreators = typeof orderFeedSlice.actions;
+
+export type TFeedInternalActions = ReturnType<TActionCreators[keyof TActionCreators]>;

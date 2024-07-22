@@ -67,3 +67,7 @@ export const {
 } = orderSlice.actions;
 
 export default orderSlice.reducer;
+
+type TActionCreators = typeof orderSlice.actions;
+
+export type TOrderActions = ReturnType<TActionCreators[keyof TActionCreators]>;
