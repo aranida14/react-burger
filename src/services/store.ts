@@ -3,10 +3,25 @@ import ingredientsReducer, { TIngredientsActions } from './slices/ingredients-sl
 import burgerConstructorReducer, { TBurgerConstructorActions } from './slices/burger-constructor-slice';
 import orderReducer, { TOrderActions } from './slices/order-slice';
 import userReducer, { TUserActions } from './slices/user-slice';
-import orderFeedReducer, { TFeedInternalActions, wsClose, wsConnecting, wsError, wsMessage, wsOpen } from './slices/order-feed-slice';
+import orderFeedReducer, {
+  TFeedInternalActions,
+  wsClose,
+  wsConnecting,
+  wsError,
+  wsMessage,
+  wsOpen
+} from './slices/order-feed-slice';
 import { socketMiddlware } from './middlware/socket-middlware';
 import { TFeedExternalActions, wsConnect, wsDisconnect } from './actions/order-feed-actions';
-import { TProfileOrdersActions } from './slices/profile-orders-slice';
+import profileOrdersSlice, {
+  TProfileOrdersActions,
+  wsCloseProfile,
+  wsConnectingProfile,
+  wsErrorProfile,
+  wsMessageProfile,
+  wsOpenProfile,
+} from './slices/profile-orders-slice';
+import { TProfileExternalActions, wsConnectProfile, wsDisconnectProfile } from './actions/profile-orders-actions';
 
 const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
@@ -14,6 +29,7 @@ const rootReducer = combineReducers({
   order: orderReducer,
   user: userReducer,
   orderFeed: orderFeedReducer,
+  profileOrders: profileOrdersSlice,
 });
 
 const orderFeedMiddlware = socketMiddlware({
@@ -26,10 +42,20 @@ const orderFeedMiddlware = socketMiddlware({
   onMessage: wsMessage,
 });
 
+const profileOrdersMiddlware = socketMiddlware({
+  connect: wsConnectProfile,
+  disconnect: wsDisconnectProfile,
+  onConnecting: wsConnectingProfile,
+  onOpen: wsOpenProfile,
+  onError: wsErrorProfile,
+  onClose: wsCloseProfile,
+  onMessage: wsMessageProfile,
+});
+
 export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddlware) => {
-    return getDefaultMiddlware().concat(orderFeedMiddlware);
+    return getDefaultMiddlware().concat(orderFeedMiddlware, profileOrdersMiddlware);
   }
 });
 
@@ -40,6 +66,7 @@ type TApplicationActions =
   | TUserActions
   | TIngredientsActions
   | TBurgerConstructorActions
+  | TProfileExternalActions
   | TProfileOrdersActions;
 
 export type RootState = ReturnType<typeof rootReducer>; 

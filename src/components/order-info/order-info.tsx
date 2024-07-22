@@ -1,5 +1,4 @@
 import { useLocation, useParams } from 'react-router-dom';
-// import { ordersData } from '../../utils/data';
 import { useSelector } from '../../services/hooks/hooks';
 import { useMemo } from 'react';
 import { TCountedIngredient } from '../../utils/types';
@@ -13,9 +12,10 @@ const OrderInfo = (): React.JSX.Element => {
   const background = location.state && location.state.background;
 
   const { orderId }  = useParams();
-  const { orders } = useSelector((state) => state.orderFeed); //TODO if profile location, select profile orders
+  const { orders } = useSelector((state) => (
+    location.pathname.startsWith('/feed') ? state.orderFeed
+    : state.profileOrders));
   const order = orders.find((orderItem) => orderItem._id === orderId);
-  // const { data: ingredients, isLoading } = useSelector((state) => state.ingredients);
   const ingredients = useSelector((state) => state.ingredients.data);
 
   const orderIngredients = useMemo<TCountedIngredient[] | null>(

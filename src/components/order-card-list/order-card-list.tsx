@@ -1,6 +1,5 @@
 import OrderCard from "../order-card/order-card";
 import styles from './order-card-list.module.css';
-import { ordersData } from "../../utils/data";
 import { Link, useLocation } from "react-router-dom";
 import { TOrderCard } from "../../utils/types";
 

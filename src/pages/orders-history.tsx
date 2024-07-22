@@ -1,18 +1,24 @@
 import OrderCardList from "../components/order-card-list/order-card-list";
 import { useDispatch, useSelector } from "../services/hooks/hooks";
 import { WebSocketStatus } from '../utils/types';
-import { wsConnect, wsDisconnect } from '../services/actions/order-feed-actions';
-import { ORDER_FEED_URL } from '../utils/constants';
-import { useEffect } from 'react';
+import { wsConnectProfile, wsDisconnectProfile } from '../services/actions/profile-orders-actions';
+import { ORDERS_BY_USER_URL } from '../utils/constants';
+import { useEffect, useMemo } from 'react';
 import Loader from "../components/loader/loader";
 
 export const OrdersHistoryPage = () => {
-  const { orders, status } = useSelector((state) => state.orderFeed);
+  const { orders, status } = useSelector((state) => state.profileOrders);
+  const sortedOrders = useMemo(() => orders ? [...orders].reverse() : [], [orders]);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(wsConnect(ORDER_FEED_URL));
+    const wssUrl = new URL(ORDERS_BY_USER_URL);
+    wssUrl.searchParams.set(
+      "token",
+      (localStorage.getItem('accessToken') ?? '').replace('Bearer ', '')
+    );
+    dispatch(wsConnectProfile(wssUrl.toString()));
     return () => {
-      dispatch(wsDisconnect());
+      dispatch(wsDisconnectProfile());
     };
   }, [dispatch]);
   
@@ -20,5 +26,14 @@ export const OrdersHistoryPage = () => {
     return <Loader />;
   }
 
-  return <OrderCardList orders={orders} />;
+  if (!orders || !orders.length) {
+    return null;
+  }
+
+  return (
+    <>
+      {/* <h2>Connection status: {status}</h2> */}
+      <OrderCardList orders={sortedOrders} />
+    </>
+  );
 };

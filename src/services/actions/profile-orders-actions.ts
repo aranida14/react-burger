@@ -1,6 +1,6 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const wsConnect = createAction<string, "ORDER_FEED_ACTION">("ORDER_FEED_ACTION");
-export const wsDisconnect = createAction("ORDER_FEED_DISCONNECT");
+export const wsConnectProfile = createAction<string, "PROFILE_ORDERS_ACTION">("PROFILE_ORDERS_ACTION");
+export const wsDisconnectProfile = createAction("PROFILE_ORDERS_DISCONNECT");
 
-export type TFeedExternalActions = ReturnType<typeof wsConnect> | ReturnType<typeof wsDisconnect>;
+export type TProfileExternalActions = ReturnType<typeof wsConnectProfile> | ReturnType<typeof wsDisconnectProfile>;

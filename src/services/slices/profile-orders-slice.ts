@@ -17,31 +17,31 @@ export const profileOrdersSlice = createSlice({
   name: 'profileOrders',
   initialState,
   reducers: {
-    wsConnecting: (state) => {
+    wsConnectingProfile: (state) => {
       state.status = WebSocketStatus.CONNECTING;
     },
-    wsOpen: (state) => {
+    wsOpenProfile: (state) => {
       state.status = WebSocketStatus.ONLINE;
       state.connectionError = null;
     },
-    wsClose: (state) => {
+    wsCloseProfile: (state) => {
       state.status = WebSocketStatus.OFFLINE;
     },
-    wsError: (state, action: PayloadAction<string>) => {
+    wsErrorProfile: (state, action: PayloadAction<string>) => {
       state.connectionError = action.payload;
     },
-    wsMessage: (state, action: PayloadAction<TOrdersData>) => {
+    wsMessageProfile: (state, action: PayloadAction<TOrdersData>) => {
       state.orders = action.payload.orders;
     }
   },
 });
 
 export const {
-  wsConnecting,
-  wsOpen,
-  wsClose,
-  wsError,
-  wsMessage
+  wsConnectingProfile,
+  wsOpenProfile,
+  wsCloseProfile,
+  wsErrorProfile,
+  wsMessageProfile,
 } = profileOrdersSlice.actions;
 
 
