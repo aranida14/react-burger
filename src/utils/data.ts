@@ -1,3 +1,5 @@
+import { TOrdersData } from "./types";
+
 export const data = [
   {
      "_id":"60666c42cc7b410027a1a9b1",
@@ -490,14 +492,6 @@ export const ordersData: TOrdersData = {
       "updatedAt": "2024-07-17T11:07:13.098Z",
       "number": 46236
   }, {
-      "_id": "6697a422119d45001b4f98e2",
-      "ingredients": ["643d69a5c3f7b9001cfa093c", null],
-      "status": "done",
-      "name": "Краторный бургер",
-      "createdAt": "2024-07-17T10:59:46.288Z",
-      "updatedAt": "2024-07-17T10:59:46.714Z",
-      "number": 46235
-  }, {
       "_id": "6697a40b119d45001b4f98e0",
       "ingredients": ["643d69a5c3f7b9001cfa093d", "643d69a5c3f7b9001cfa093e"],
       "status": "done",
@@ -577,14 +571,6 @@ export const ordersData: TOrdersData = {
       "createdAt": "2024-07-17T10:19:18.165Z",
       "updatedAt": "2024-07-17T10:19:19.559Z",
       "number": 46225
-  }, {
-      "_id": "66979948119d45001b4f98b1",
-      "ingredients": ["643d69a5c3f7b9001cfa093d", null],
-      "status": "done",
-      "name": "Флюоресцентный бургер",
-      "createdAt": "2024-07-17T10:13:28.958Z",
-      "updatedAt": "2024-07-17T10:13:29.396Z",
-      "number": 46224
   }, {
       "_id": "66979800119d45001b4f98af",
       "ingredients": ["643d69a5c3f7b9001cfa093c", "643d69a5c3f7b9001cfa093e", "643d69a5c3f7b9001cfa0941", "643d69a5c3f7b9001cfa093e", "643d69a5c3f7b9001cfa093c"],
@@ -701,20 +687,3 @@ export const ordersData: TOrdersData = {
   "total": 45885,
   "totalToday": 296
 };
-
-export type TOrderCard = {
-  _id: string;
-  ingredients: (string | null)[];
-  status: 'done' | 'created' | 'pending';
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-  number: number;
-};
-
-type TOrdersData = {
-  success: boolean;
-  orders: TOrderCard[];
-  total: number;
-  totalToday: number;
-}

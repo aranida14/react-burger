@@ -1,8 +1,9 @@
 import { useLocation, useParams } from 'react-router-dom';
-import { ordersData } from '../../utils/data';
+// import { ordersData } from '../../utils/data';
 import { useSelector } from '../../services/hooks';
 import { useMemo } from 'react';
-import { TIngredient, TOrderIngredient } from '../../utils/types';
+import { TCountedIngredient } from '../../utils/types';
+import { getGroupedIngredients, getIngredientsByIds, getLocalizedOrderStatus, getOrderPrice } from "../../utils/utils";
 import Loader from '../loader/loader';
 import styles from './order-info.module.css';
 import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -12,35 +13,21 @@ const OrderInfo = (): React.JSX.Element => {
   const background = location.state && location.state.background;
 
   const { orderId }  = useParams();
-  const order = ordersData.orders.find((orderItem) => orderItem._id === orderId);
-  const { data: ingredients, isLoading } = useSelector((state) => state.ingredients);
-  
-  const orderIngredients = useMemo<TOrderIngredient[] | null>(
-    () => order ? (order.ingredients.map((id: string | null) => ingredients
-      .find((ingredient) => ingredient._id === id))
-      .filter((item) => item !== undefined) as TIngredient[])
-      .reduce<TOrderIngredient[]>((groupedIngredients: TOrderIngredient[], item: TIngredient) => {
-        const addedElement = groupedIngredients.find((el) => el._id === item._id);
-        if (addedElement) {
-          addedElement.count += 1;
-          return groupedIngredients;
-        }
-        return [...groupedIngredients, { ...item, count: 1 }];
-      }, [])
-      : null,
-    [ingredients, order]
+  const { orders } = useSelector((state) => state.orderFeed); //TODO if profile location, select profile orders
+  const order = orders.find((orderItem) => orderItem._id === orderId);
+  // const { data: ingredients, isLoading } = useSelector((state) => state.ingredients);
+  const ingredients = useSelector((state) => state.ingredients.data);
+
+  const orderIngredients = useMemo<TCountedIngredient[] | null>(
+    () => order ? getGroupedIngredients(getIngredientsByIds(order.ingredients, ingredients)) : null,
+    [ingredients, order, getGroupedIngredients, getIngredientsByIds]
   );
 
-  const orderPrice = useMemo<number>(() => {
-    let sum = orderIngredients ? orderIngredients.reduce((acc: number, ingredient: TOrderIngredient) => acc + (ingredient.price * ingredient.count), 0) : 0;
-    return sum;
-  }, [orderIngredients]);
+  const orderPrice = useMemo<number>(
+    () => orderIngredients ? getOrderPrice(orderIngredients) : 0, [orderIngredients]);
 
-  const status = order && (order.status === 'done' ? 'Выполнен'
-    : order.status === 'created' ? 'Готовится' : 'Отменён');
-  if (isLoading) {
-    return <Loader />;
-  }
+  const status = order ? getLocalizedOrderStatus(order.status) : '';
+
   if (!order) {
     return <div/>;
   }

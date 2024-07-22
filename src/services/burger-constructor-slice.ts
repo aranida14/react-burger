@@ -27,7 +27,7 @@ export const burgerConstructorSlice = createSlice({
       state.ingredients = state.ingredients
         .filter((item) => item.uuid !== action.payload);
     },
-    moveIngredient: (state, action) => {
+    moveIngredient: (state, action: PayloadAction<{fromIndex: number; toIndex: number}>) => {
       const { fromIndex, toIndex } = action.payload;
       const newIngredients = [...state.ingredients];
       const movedIngredient = newIngredients[fromIndex];

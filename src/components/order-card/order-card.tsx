@@ -1,11 +1,14 @@
 import { FormattedDate, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-card.module.css';
 import { useMemo } from "react";
-import { TOrderCard } from "../../utils/data";
+import { TOrderCard } from "../../utils/types";
 import { useSelector } from "../../services/hooks";
-import { TIngredient } from "../../utils/types";
+// import { TIngredient } from "../../utils/types";
 import { useLocation } from "react-router";
-import { TOrderIngredient } from "../../utils/types";
+import { TCountedIngredient } from "../../utils/types";
+import { getGroupedIngredients, getIngredientsByIds, getLocalizedOrderStatus, getOrderPrice } from "../../utils/utils";
+import { MAX_INGREDIENTS_ICONS_SHOWN } from "../../utils/constants";
+import Loader from "../loader/loader";
 
 type TOrderCardProps = {
   order: TOrderCard;
@@ -15,31 +18,17 @@ const OrderCard = ({ order }: TOrderCardProps) => {
   const location = useLocation();
   const ingredients = useSelector((state) => state.ingredients.data);
 
-  const orderIngredients = useMemo<TOrderIngredient[]>(
-    () => (order.ingredients.map((id: string | null) => ingredients
-      .find((ingredient) => ingredient._id === id))
-      .filter((item) => item !== undefined) as TIngredient[])
-      .reduce<TOrderIngredient[]>((groupedIngredients: TOrderIngredient[], item: TIngredient) => {
-        const addedElement = groupedIngredients.find((el) => el._id === item._id);
-        if (addedElement) {
-          addedElement.count += 1;
-          return groupedIngredients;
-        }
-        return [...groupedIngredients, { ...item, count: 1 }];
-      }, []),
-    [ingredients, order]
+  const orderIngredients = useMemo<TCountedIngredient[]>(
+    () => getGroupedIngredients(getIngredientsByIds(order.ingredients, ingredients)),
+    [ingredients, order, getGroupedIngredients, getIngredientsByIds]
   );
-  // const numberFormatted = `#${String(order.number).padStart(6, '0')}`;
-  const maxIngredientsShown = 6;
-  const orderPrice = useMemo<number>(() => {
-    let sum = orderIngredients.reduce((acc: number, ingredient: TOrderIngredient) => acc + (ingredient.price * ingredient.count), 0);
-    return sum;
-  }, [orderIngredients]);
 
-  const status = order.status === 'done' ? 'Выполнен'
-    : order.status === 'created' ? 'Готовится' : 'Отменён';
-  if (!ingredients || ingredients.length === 0) {
-    return null;
+  const orderPrice = useMemo<number>(() => getOrderPrice(orderIngredients), [orderIngredients]);
+
+  const status = getLocalizedOrderStatus(order.status);
+
+  if (!ingredients.length) {
+    return <Loader />;
   }
   return (
 
@@ -56,10 +45,10 @@ const OrderCard = ({ order }: TOrderCardProps) => {
       <div className={styles.bottom}>
         <ul className={`${styles.images}`}>
           {orderIngredients.map((ingredient, index, ingredientsArray) => {
-            if (index < maxIngredientsShown) {
+            if (index < MAX_INGREDIENTS_ICONS_SHOWN) {
               // const style = {zIndex: 100 - index, left: `calc(${-index * 1} * 15px)`, opacity: 1};
               const style = {opacity: 1};
-              if (index === maxIngredientsShown - 1 && ingredientsArray.length > maxIngredientsShown) {
+              if (index === MAX_INGREDIENTS_ICONS_SHOWN - 1 && ingredientsArray.length > MAX_INGREDIENTS_ICONS_SHOWN) {
                 style.opacity = 0.5;
               }
               return (
@@ -69,7 +58,7 @@ const OrderCard = ({ order }: TOrderCardProps) => {
                     <img src={ingredient.image_mobile} alt={ingredient.name} className={styles.image}/>
                   </div>
                 </div>
-                {index === maxIngredientsShown - 1 && ingredientsArray.length > maxIngredientsShown
+                {index === MAX_INGREDIENTS_ICONS_SHOWN - 1 && ingredientsArray.length > MAX_INGREDIENTS_ICONS_SHOWN
                 && <div className={styles.extraCounter} style={{zIndex: 100, position: 'relative', left: '-40px'}}>
                   {/* `calc(${-index} * 1px - 40px)` */}
                       <span className="text text_type_main-default">

@@ -2,10 +2,15 @@ import OrderCard from "../order-card/order-card";
 import styles from './order-card-list.module.css';
 import { ordersData } from "../../utils/data";
 import { Link, useLocation } from "react-router-dom";
+import { TOrderCard } from "../../utils/types";
 
-const OrderCardList = () => {
+type TOrderCardListProps = {
+  orders: TOrderCard[];
+}
+
+const OrderCardList = ({ orders }: TOrderCardListProps) => {
   const location = useLocation();
-  const orders = ordersData.orders;
+  // const orders = ordersData.orders;
   return (
       <ul className={`${styles.container} pr-2`}>
       {

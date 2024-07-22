@@ -9,7 +9,7 @@ import {
   ProfileDataPage,
   OrdersHistoryPage,
   NotFound404Page,
-  FeedPage,
+  OrderFeedPage,
 } from '../../pages';
 import { useEffect } from 'react';
 import { useDispatch } from '../../services/hooks';
@@ -45,7 +45,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path='/ingredients/:ingredientId'
                element={<IngredientDetails />} />
-        <Route path="/feed" element={<FeedPage />} />
+        <Route path="/feed" element={<OrderFeedPage />} />
         <Route path="/feed/:orderId" element={<OrderInfo />} />
         <Route path="/login" element={<OnlyUnAuth component={<LoginPage />} />} />
         <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
