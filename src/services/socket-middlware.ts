@@ -12,11 +12,16 @@ export type TWsActionTypes = {
   onMessage: ActionCreatorWithPayload<any>,
 };
 
+const RECONNECT_PERIOD = 3000;
+
 export const socketMiddlware = (
   wsActions: TWsActionTypes
 ): Middleware<{}, RootState> => {
   return (store) => {
     let socket: WebSocket | null = null;
+    let reconnectTimer = 0;
+    let url = '';
+    let isConnected = false;
     const {
       connect,
       disconnect,
@@ -32,6 +37,8 @@ export const socketMiddlware = (
     return (next) => (action) => {
       if (connect.match(action)) {
         socket = new WebSocket(action.payload);
+        url = action.payload;
+        isConnected = true;
         dispatch(onConnecting());
 
         socket.onopen = () => {
@@ -54,6 +61,11 @@ export const socketMiddlware = (
         }
 
         socket.onclose = () => {
+          if (isConnected) {
+            reconnectTimer = window.setTimeout(() => {
+              dispatch(connect(url));
+            }, RECONNECT_PERIOD);
+          }
           dispatch(onClose());
         }
       }
@@ -67,6 +79,9 @@ export const socketMiddlware = (
       }
 
       if (socket && disconnect.match(action)) {
+        clearTimeout(reconnectTimer);
+        reconnectTimer = 0;
+        isConnected = false;
         socket.close();
         socket = null;
       }
