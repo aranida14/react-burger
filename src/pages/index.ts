@@ -7,6 +7,7 @@ import { ProfilePage } from './profile';
 import { ProfileDataPage } from './profile-data';
 import { OrdersHistoryPage } from './orders-history';
 import { NotFound404Page } from './not-found';
+import { OrderFeedPage } from './order-feed';
 
 export {
   HomePage,
@@ -18,4 +19,5 @@ export {
   ProfileDataPage,
   OrdersHistoryPage,
   NotFound404Page,
+  OrderFeedPage,
 };

@@ -1,6 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { TIngredientWithUuid } from '../../utils/types';
 
-const initialState = {
+type TBurgerConstructorState = {
+  bun: null | TIngredientWithUuid;
+  ingredients: TIngredientWithUuid[];
+}
+
+const initialState: TBurgerConstructorState = {
   bun: null,
   ingredients: [],
 }
@@ -9,7 +15,7 @@ export const burgerConstructorSlice = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addIngredient: (state, action) => {
+    addIngredient: (state, action: PayloadAction<TIngredientWithUuid>) => {
       const { type } = action.payload;
       if (type === 'bun') {
         state.bun = action.payload;
@@ -17,11 +23,11 @@ export const burgerConstructorSlice = createSlice({
         state.ingredients.push(action.payload);
       }
     },
-    deleteIngredient: (state, action) => {
+    deleteIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients
         .filter((item) => item.uuid !== action.payload);
     },
-    moveIngredient: (state, action) => {
+    moveIngredient: (state, action: PayloadAction<{fromIndex: number; toIndex: number}>) => {
       const { fromIndex, toIndex } = action.payload;
       const newIngredients = [...state.ingredients];
       const movedIngredient = newIngredients[fromIndex];
@@ -44,3 +50,7 @@ export const {
 } = burgerConstructorSlice.actions;
 
 export default burgerConstructorSlice.reducer;
+
+type TActionCreators = typeof burgerConstructorSlice.actions;
+
+export type TBurgerConstructorActions = ReturnType<TActionCreators[keyof TActionCreators]>;

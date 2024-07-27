@@ -6,3 +6,7 @@
 
   max-height: 720px;
 }
+
+.orderId {
+  text-shadow: 4px 4px 32px #3333FF;
+}

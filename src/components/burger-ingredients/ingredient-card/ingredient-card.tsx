@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import styles from './ingredient-card.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TIngredient } from '../../../utils/types';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/hooks/hooks';
 import { useDrag } from 'react-dnd';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -13,7 +13,6 @@ type TCardProps = {
 const IngredientCard = ({ data }: TCardProps) => {
   const location = useLocation();
   const {_id, image, name, price} = data;
-  // @ts-ignore
   const { bun, ingredients: constructorIngredients } = useSelector((state) => state.burgerConstructor);
 
   const [{ isDrag }, dragRef] = useDrag({

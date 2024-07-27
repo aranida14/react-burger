@@ -1,11 +1,10 @@
 import styles from './profile.module.css';
 import { Button, Input, PasswordInput, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, updateUserResetError } from '../services/user-slice';
+import { useDispatch, useSelector } from '../services/hooks/hooks';
+import { updateUser, updateUserResetError } from '../services/slices/user-slice';
 
 export const ProfileDataPage = () => {
-  // @ts-ignore
   const { user, updateUserError } = useSelector((state) => state.user);
   const [ currentName, currentEmail ] =
     user ? [user.name, user.email] : ['', ''];
@@ -50,7 +49,7 @@ export const ProfileDataPage = () => {
     if (password) {
       newUserData.password = password;
     }
-    // @ts-ignore
+
     dispatch(updateUser(newUserData));
     //TODO вывести сообщение об успехе
   };
