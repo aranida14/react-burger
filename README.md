@@ -1,5 +1,5 @@
 ### Описание
-Бургерная Stellar Burgers
+Бургерная **Stellar Burgers**\
 Ссылка на проект:
 [https://aranida14.github.io/react-burger/](https://aranida14.github.io/react-burger/)
 
