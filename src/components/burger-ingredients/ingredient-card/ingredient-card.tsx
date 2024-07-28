@@ -39,6 +39,7 @@ const IngredientCard = ({ data }: TCardProps) => {
       >
         <div
           ref={dragRef}
+          data-cy={`ingredient-${_id}`}
           className={ `${styles.card} ml-4 mr-2 mb-8 ${isDrag ? styles.isDrag : ''}` }
         >
           { count > 0 && <Counter count={count} size="default" extraClass="m-1" /> }

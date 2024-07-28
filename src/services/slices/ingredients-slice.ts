@@ -6,10 +6,10 @@ import { AppDispatch } from '../store';
 type TIngredientsState = {
   data: TIngredient[];
   isLoading: boolean;
-  error: null | Error;
+  error: null | string;
 }
 
-const initialState: TIngredientsState = {
+export const initialState: TIngredientsState = {
   data: [],
   isLoading: false,
   error: null,
@@ -29,7 +29,7 @@ export const ingredientsSlice = createSlice({
     },
     fetchIngredientsFailure: (state, action: PayloadAction<Error>) => {
       state.isLoading = false;
-      state.error = action.payload;
+      state.error = action.payload.message;
     },
   },
 });
