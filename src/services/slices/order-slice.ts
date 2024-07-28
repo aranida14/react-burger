@@ -11,7 +11,7 @@ type TOrderState = {
   // isLoadingCurrentOrder: boolean;
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   orderId: null,
   isLoading: false,
   error: null,

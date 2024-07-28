@@ -9,7 +9,7 @@ export type TOrderFeedState = {
   connectionError: string | null;
 };
 
-const initialState: TOrderFeedState = {
+export const initialState: TOrderFeedState = {
   status: WebSocketStatus.OFFLINE,
   orders: [],
   total: 0,
