@@ -91,7 +91,7 @@ const BurgerConstructor = () => {
     : <OrderDetails />;
 
   return (
-    <section ref={dropRef} className={ `${styles.section} pt-25 pl-4` }>
+    <section ref={dropRef} data-cy="dropTarget" className={ `${styles.section} pt-25 pl-4` }>
       <ul className={styles.elementsContainer}>
         <li className={ `${styles.constructorElement}`}>
           {

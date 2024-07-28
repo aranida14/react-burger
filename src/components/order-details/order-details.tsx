@@ -6,7 +6,7 @@ const OrderDetails = () => {
   const orderId = useSelector((state) => state.order.orderId);
   return (
     <div className={`${styles.order}`}>
-      <div className={ `${styles.orderId} text text_type_digits-large mt-10 mb-8` }>{orderId}</div>
+      <div className={ `${styles.orderId} text text_type_digits-large mt-10 mb-8` } data-cy="orderId">{orderId}</div>
       <div className='text text_type_main-medium mb-15'>идентификатор заказа</div>
       <img className='mb-15' src={doneImagePath} alt="Заказ принят" />
       <div className='text text_type_main-default mb-2'>Ваш заказ начали готовить</div>
